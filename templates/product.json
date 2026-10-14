@@ -1,0 +1,67 @@
+{
+  "name": "Default Product",
+  "sections": {
+    "main_product": {
+      "type": "main-product",
+      "settings": {
+        "show_sticky_bar": true,
+        "delivery_guarantee_text": "Guaranteed Christmas Delivery to",
+        "duties_badge_text": "Pre-paid Duties Included at Checkout (Zero Customs Taxes)"
+      },
+      "blocks": {
+        "accordion_1": {
+          "type": "accordion",
+          "settings": {
+            "icon": "❄️",
+            "title": "How It Beats Winter Boredom",
+            "content": "<p>When cold winter weather traps you inside, your room environment matters. The Levitating Galaxy Orb uses real magnetic repulsion physics to float continuously with zero physical contacts. It projects soothing, cosmic aurora nebula light shifts across your ceiling and walls—turning a dull winter bedroom into an interactive aesthetic universe.</p>",
+            "is_open": true
+          }
+        },
+        "accordion_2": {
+          "type": "accordion",
+          "settings": {
+            "icon": "📦",
+            "title": "What's In The Box",
+            "content": "<ul><li>1x Magnetic Levitation Base (Slate Grey finish)</li><li>1x 3D High-Detail Galaxy Nebula Orb (14cm diameter)</li><li>1x Braided USB-C Power Cable (Universal 100-240V compatible)</li><li>1x Wireless Remote for RGB Color Cycling & Speed</li><li>1x Holiday Quick-Start Guide & Calibration Tool</li></ul>"
+          }
+        },
+        "accordion_3": {
+          "type": "accordion",
+          "settings": {
+            "icon": "🚚",
+            "title": "Shipping & Returns (DDP Guaranteed)",
+            "content": "<p>All international orders ship via priority air express (5-8 business days). We utilize Delivered Duty Paid (DDP)—meaning all VAT, import tariffs, and customs clearances are pre-paid by us. You will never pay any surprise fees at the door. If your teen isn't thrilled, return it through Jan 31, 2027 for a 100% refund.</p>"
+          }
+        },
+        "accordion_4": {
+          "type": "accordion",
+          "settings": {
+            "icon": "🛡️",
+            "title": "Parent Safety & Specs",
+            "content": "<p>Designed specifically for ages 10+. Fully CE, FCC, and RoHS certified. Built with shatter-resistant PLA polymer and cool-to-the-touch LED technology that never overheats even if left floating 24/7. Automatic fail-safe magnet catch snaps the orb safely to the base if power is disconnected.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "accordion_1",
+        "accordion_2",
+        "accordion_3",
+        "accordion_4"
+      ]
+    },
+    "parent_trust_strip": {
+      "type": "parent-trust-strip",
+      "settings": {}
+    },
+    "social_proof_grid": {
+      "type": "social-proof-grid",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main_product",
+    "parent_trust_strip",
+    "social_proof_grid"
+  ]
+}

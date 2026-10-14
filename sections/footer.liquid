@@ -1,0 +1,222 @@
+<footer class="site-footer" id="footer-{{ section.id }}" role="contentinfo">
+  <!-- Newsletter Signup Card -->
+  {%- if section.settings.show_newsletter -%}
+    <div class="footer-newsletter-card reveal-on-scroll">
+      <div style="font-size: 1.8rem; margin-bottom: 6px;">{{ section.settings.newsletter_icon | default: '🎁' }}</div>
+      <h3 class="footer-newsletter-title">{{ section.settings.newsletter_title | default: 'Get 10% Off Your First Gift Order' | escape }}</h3>
+      <p class="footer-newsletter-sub">
+        {{ section.settings.newsletter_sub | default: 'Sign up for secret holiday flash drops, boredom-buster tech releases, and Christmas shipping deadline reminders.' | escape }}
+      </p>
+
+      <form class="footer-newsletter-form" onsubmit="event.preventDefault(); alert('🎉 Thank you! Check your email for your 10% OFF holiday code: WINTERVIBES10');">
+        <input type="email" class="footer-input" placeholder="Enter parent or shopper email..." required aria-label="Email address for discount">
+        <button type="submit" class="btn-tactile btn-primary" style="padding: 13px;">
+          {{ section.settings.newsletter_btn | default: 'Claim 10% Holiday Discount' | escape }}
+        </button>
+      </form>
+    </div>
+  {%- endif -%}
+
+  <!-- Reusable Navigation Blocks -->
+  <div class="footer-links-grid">
+    {%- if section.blocks.size > 0 -%}
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'menu' -%}
+            <div {{ block.shopify_attributes }}>
+              <h4 class="footer-col-title">{{ block.settings.title | escape }}</h4>
+              {%- if block.settings.menu != blank -%}
+                <ul class="footer-nav-list">
+                  {%- for link in block.settings.menu.links -%}
+                    <li><a href="{{ link.url }}" class="footer-nav-link">{{ link.title }}</a></li>
+                  {%- endfor -%}
+                </ul>
+              {%- else -%}
+                <ul class="footer-nav-list">
+                  <li><a href="#trending" class="footer-nav-link">Boredom Busters</a></li>
+                  <li><a href="#trending" class="footer-nav-link">Room Aesthetic LEDs</a></li>
+                  <li><a href="#budget" class="footer-nav-link">Stocking Stuffers Under $25</a></li>
+                </ul>
+              {%- endif -%}
+            </div>
+
+          {%- when 'text' -%}
+            <div {{ block.shopify_attributes }}>
+              <h4 class="footer-col-title">{{ block.settings.title | escape }}</h4>
+              <div style="font-size: 0.84rem; color: #CBD5E1; line-height: 1.5;">
+                {{ block.settings.content }}
+              </div>
+            </div>
+        {%- endcase -%}
+      {%- endfor -%}
+    {%- else -%}
+      <!-- Default Links -->
+      <div>
+        <h4 class="footer-col-title">Holiday Tech</h4>
+        <ul class="footer-nav-list">
+          <li><a href="#trending" class="footer-nav-link">Boredom Busters</a></li>
+          <li><a href="#trending" class="footer-nav-link">Room Aesthetic LEDs</a></li>
+          <li><a href="#trending" class="footer-nav-link">Retro Handheld Gaming</a></li>
+          <li><a href="#budget" class="footer-nav-link">Stocking Stuffers Under $25</a></li>
+          <li><a href="#budget" class="footer-nav-link">Christmas Wishlist Top 10</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer-col-title">International &amp; Help</h4>
+        <ul class="footer-nav-list">
+          <li><a href="pages/track-order.html" class="footer-nav-link">Track Your Package</a></li>
+          <li><a href="pages/shipping-duties.html" class="footer-nav-link">Shipping &amp; Duties (DDP)</a></li>
+          <li><a href="pages/returns.html" class="footer-nav-link">60-Day Holiday Returns</a></li>
+          <li><a href="pages/faq.html" class="footer-nav-link">Parent Safety &amp; Adapters FAQ</a></li>
+          <li><a href="mailto:support@frostbyte-gadgets.com" class="footer-nav-link">24/7 Holiday Support</a></li>
+        </ul>
+      </div>
+    {%- endif -%}
+  </div>
+
+  <!-- Country & Currency Selector -->
+  {%- if section.settings.show_currency_selector -%}
+    <div style="max-width: 320px; margin: 0 auto 24px; text-align: center;">
+      <label for="footer-currency-select" style="font-size: 0.76rem; color: #94A3B8; text-transform: uppercase; font-weight: 700; display: block; margin-bottom: 6px;">
+        Region &amp; Currency
+      </label>
+      <select id="footer-currency-select" class="country-currency-select drawer-country-select" style="background:#1E293B; color:#FFFFFF; border-color: rgba(255,255,255,0.2);">
+        <option value="USD">🇺🇸 United States (USD $)</option>
+        <option value="GBP">🇬🇧 United Kingdom (GBP £)</option>
+        <option value="EUR">🇪🇺 Europe / Eurozone (EUR €)</option>
+        <option value="CAD">🇨🇦 Canada (CAD CA$)</option>
+        <option value="AUD">🇦🇺 Australia (AUD AU$)</option>
+      </select>
+    </div>
+  {%- endif -%}
+
+  <!-- Payment Methods Display -->
+  {%- if section.settings.show_payment_icons -%}
+    <div class="footer-payment-icons">
+      <span class="payment-badge">VISA</span>
+      <span class="payment-badge">MASTERCARD</span>
+      <span class="payment-badge">APPLE PAY</span>
+      <span class="payment-badge">KLARNA</span>
+      <span class="payment-badge">PAYPAL</span>
+      <span class="payment-badge">SHOP PAY</span>
+    </div>
+  {%- endif -%}
+
+  <div class="footer-copyright">
+    &copy; {{ 'now' | date: '%Y' }} {{ shop.name | default: 'FROSTBYTE Gadgets Inc.' }}. All rights reserved.<br>
+    {{ section.settings.footer_tagline | default: 'Guaranteed Christmas Delivery &bull; Pre-Paid International Duties (DDP) &bull; Verified Teen Safety Certified.' }}
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_newsletter",
+      "label": "Show Newsletter Signup Box",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "newsletter_icon",
+      "label": "Newsletter Emoji Icon",
+      "default": "🎁"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_title",
+      "label": "Newsletter Title",
+      "default": "Get 10% Off Your First Gift Order"
+    },
+    {
+      "type": "textarea",
+      "id": "newsletter_sub",
+      "label": "Newsletter Subtitle",
+      "default": "Sign up for secret holiday flash drops, boredom-buster tech releases, and Christmas shipping deadline reminders."
+    },
+    {
+      "type": "text",
+      "id": "newsletter_btn",
+      "label": "Newsletter Button Label",
+      "default": "Claim 10% Holiday Discount"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_currency_selector",
+      "label": "Show Region & Currency Selector",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Show Payment Icons",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "footer_tagline",
+      "label": "Footer Legal Tagline",
+      "default": "Guaranteed Christmas Delivery • Pre-Paid International Duties (DDP) • Verified Teen Safety Certified."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "menu",
+      "name": "Navigation Menu",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Column Title",
+          "default": "Quick Links"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Select Menu"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Custom Text Column",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Column Title",
+          "default": "About Frostbyte"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Column Content",
+          "default": "<p>Dedicated to helping teens beat winter boredom with the coolest room tech, LED aesthetics, and interactive gadgets.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Footer",
+      "blocks": [
+        {
+          "type": "menu",
+          "settings": {
+            "title": "Holiday Tech"
+          }
+        },
+        {
+          "type": "menu",
+          "settings": {
+            "title": "International & Help"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

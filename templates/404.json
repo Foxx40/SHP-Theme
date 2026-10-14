@@ -1,0 +1,17 @@
+{
+  "name": "404 Not Found",
+  "sections": {
+    "hero_banner": {
+      "type": "hero-banner",
+      "settings": {
+        "urgency_tag": "❄️ Oops! Page Lost in the Snow",
+        "headline": "404 - Winter Gadget Not Found",
+        "subtext": "Head back to our main store to browse the best holiday indoor boredom busters.",
+        "btn_text": "Back to Home"
+      }
+    }
+  },
+  "order": [
+    "hero_banner"
+  ]
+}

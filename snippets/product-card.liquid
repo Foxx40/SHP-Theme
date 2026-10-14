@@ -1,0 +1,115 @@
+{% comment %}
+  Reusable Product Card Snippet
+  Accepts:
+  - product: Shopify Product object (optional)
+  - id: String product id
+  - title: String product title
+  - price_usd: String price
+  - compare_price_usd: String compare price
+  - card_badge: String badge text
+  - badge_type: 'christmas' or 'trending'
+  - reviews_count: Number
+  - image_src: String asset image name or image object
+  - product_url: String url
+{% endcomment %}
+
+{%- liquid
+  if product != blank
+    assign card_id = product.id
+    assign card_title = product.title
+    assign card_url = product.url
+    assign card_price_raw = product.price | divided_by: 100.0
+    assign card_price_display = product.price | money
+    if product.compare_at_price > product.price
+      assign card_compare_price_raw = product.compare_at_price | divided_by: 100.0
+      assign card_compare_price_display = product.compare_at_price | money
+    endif
+    if product.featured_image != blank
+      assign card_image_url = product.featured_image | image_url: width: 600
+    else
+      assign card_image_url = 'product-orb-lamp.jpg' | asset_url
+    endif
+    if card_badge == blank and product.compare_at_price > product.price
+      assign card_badge = 'Holiday Sale'
+      assign badge_type = 'christmas'
+    endif
+  else
+    assign card_id = id | default: 'orb-lamp'
+    assign card_title = title | default: 'Levitating Galaxy Orb Ambient Lamp'
+    assign card_url = product_url | default: 'products/levitating-galaxy-orb.html'
+    assign card_price_raw = price_usd | default: '49.99'
+    assign card_price_display = '$' | append: card_price_raw
+    if compare_price_usd != blank
+      assign card_compare_price_raw = compare_price_usd
+      assign card_compare_price_display = '$' | append: compare_price_usd
+    endif
+    if image_src contains 'http' or image_src contains '/'
+      assign card_image_url = image_src
+    else
+      assign card_image_url = image_src | default: 'product-orb-lamp.jpg' | asset_url
+    endif
+  endif
+-%}
+
+<article class="product-card reveal-on-scroll">
+  <div class="card-media-wrapper">
+    <div class="card-badge-container">
+      {%- if card_badge != blank -%}
+        <span class="card-badge card-badge-{{ badge_type | default: 'christmas' }}">
+          {{ card_badge }}
+        </span>
+      {%- endif -%}
+    </div>
+
+    <a href="{{ card_url }}" aria-label="{{ card_title | escape }}">
+      <img 
+        src="{{ card_image_url }}" 
+        alt="{{ card_title | escape }}" 
+        loading="lazy"
+        width="400"
+        height="400"
+      >
+    </a>
+
+    <!-- Quick Add "+" Button -->
+    <button 
+      type="button" 
+      class="quick-add-btn" 
+      data-quick-add 
+      data-product-id="{{ card_id }}"
+      data-product-title="{{ card_title | escape }}"
+      data-product-price="{{ card_price_raw }}"
+      data-product-image="{{ card_image_url }}"
+      aria-label="Add {{ card_title | escape }} to Cart"
+    >
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <line x1="12" y1="5" x2="12" y2="19"></line>
+        <line x1="5" y1="12" x2="19" y2="12"></line>
+      </svg>
+    </button>
+  </div>
+
+  <div class="card-content">
+    <div class="card-rating-strip">
+      <span class="card-stars">★★★★★</span>
+      <span>({{ reviews_count | default: 128 }})</span>
+    </div>
+
+    <h3 class="card-title">
+      <a href="{{ card_url }}">
+        {{ card_title }}
+      </a>
+    </h3>
+
+    <div class="card-pricing-block">
+      <span class="card-price" data-price-usd="{{ card_price_raw }}">{{ card_price_display }}</span>
+      {%- if card_compare_price_raw != blank -%}
+        <span class="card-compare-price" data-price-usd="{{ card_compare_price_raw }}">{{ card_compare_price_display }}</span>
+      {%- endif -%}
+    </div>
+
+    <div class="card-delivery-tag">
+      <span>🎄 Guaranteed Dec 22 Delivery</span>
+    </div>
+  </div>
+</article>

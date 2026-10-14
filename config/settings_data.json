@@ -1,0 +1,11 @@
+{
+  "current": {
+    "color_primary": "#9B1B30",
+    "color_secondary": "#2B4C5E",
+    "color_canvas": "#F8F9FA",
+    "color_surface": "#E9ECEF",
+    "color_text_main": "#1E293B",
+    "cutoff_date": "Dec 15",
+    "enable_snow_effect": true
+  }
+}

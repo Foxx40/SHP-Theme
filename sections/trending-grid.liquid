@@ -1,0 +1,333 @@
+<section class="trending-grid-section" id="trending-{{ section.id }}">
+  <div class="section-header">
+    <div class="section-title-wrap">
+      {%- if section.settings.subtitle != blank -%}
+        <span class="section-subtitle">{{ section.settings.subtitle | escape }}</span>
+      {%- endif -%}
+      <h2 class="section-title">{{ section.settings.title | default: 'Winter Boredom Busters' | escape }}</h2>
+    </div>
+
+    {%- if section.settings.link_label != blank -%}
+      <a href="{{ section.settings.link_url | default: '#budget' }}" class="section-link">
+        <span>{{ section.settings.link_label | escape }}</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </a>
+    {%- endif -%}
+  </div>
+
+  <div class="product-grid-2col">
+    {%- if section.blocks.size > 0 -%}
+      {%- for block in section.blocks -%}
+        <div class="grid-block-item" {{ block.shopify_attributes }}>
+          {%- case block.type -%}
+            {%- when 'product' -%}
+              {%- if block.settings.product != blank -%}
+                {% render 'product-card',
+                  product: block.settings.product,
+                  card_badge: block.settings.badge,
+                  badge_type: block.settings.badge_type
+                %}
+              {%- else -%}
+                {% render 'product-card',
+                  id: block.id,
+                  title: block.settings.fallback_title | default: 'Holiday Tech Gadget',
+                  price_usd: block.settings.fallback_price | default: '39.99',
+                  compare_price_usd: block.settings.fallback_compare_price | default: '49.99',
+                  card_badge: block.settings.badge | default: 'Christmas Hit',
+                  badge_type: block.settings.badge_type | default: 'christmas',
+                  reviews_count: 142,
+                  image_src: 'product-orb-lamp.jpg'
+                %}
+              {%- endif -%}
+
+            {%- when 'custom_item' -%}
+              {%- assign custom_img = 'product-orb-lamp.jpg' -%}
+              {%- if block.settings.image != blank -%}
+                {%- assign custom_img = block.settings.image | image_url: width: 600 -%}
+              {%- elsif block.settings.image_filename != blank -%}
+                {%- assign custom_img = block.settings.image_filename | asset_url -%}
+              {%- endif -%}
+
+              {% render 'product-card',
+                id: block.id,
+                title: block.settings.title,
+                price_usd: block.settings.price,
+                compare_price_usd: block.settings.compare_price,
+                card_badge: block.settings.badge,
+                badge_type: block.settings.badge_type,
+                reviews_count: block.settings.reviews_count | default: 156,
+                image_src: custom_img,
+                product_url: block.settings.product_url | default: 'products/levitating-galaxy-orb.html'
+              %}
+          {%- endcase -%}
+        </div>
+      {%- endfor -%}
+
+    {%- elsif section.settings.collection != blank and section.settings.collection.products_count > 0 -%}
+      {%- for product in section.settings.collection.products limit: section.settings.products_to_show -%}
+        {% render 'product-card', product: product %}
+      {%- endfor -%}
+
+    {%- else -%}
+      <!-- Default Demonstration Gadgets -->
+      {% render 'product-card',
+        id: 'orb-lamp',
+        title: 'Levitating Galaxy Orb Ambient Lamp',
+        price_usd: '49.99',
+        compare_price_usd: '69.99',
+        card_badge: 'Christmas Must-Have',
+        badge_type: 'christmas',
+        reviews_count: 248,
+        image_src: 'product-orb-lamp.jpg',
+        product_url: 'products/levitating-galaxy-orb.html'
+      %}
+
+      {% render 'product-card',
+        id: 'pixel-clock',
+        title: 'PixelJoy Retro RGB Smart Desktop Pixel Clock',
+        price_usd: '59.99',
+        compare_price_usd: '79.99',
+        card_badge: 'Aesthetic Hit',
+        badge_type: 'trending',
+        reviews_count: 189,
+        image_src: 'product-pixel-clock.jpg',
+        product_url: 'products/levitating-galaxy-orb.html'
+      %}
+
+      {% render 'product-card',
+        id: 'pocket-console',
+        title: 'CyberWave Transparent Retro Handheld Game Console',
+        price_usd: '39.99',
+        compare_price_usd: '54.99',
+        card_badge: 'Boredom Buster',
+        badge_type: 'christmas',
+        reviews_count: 312,
+        image_src: 'product-pocket-console.jpg',
+        product_url: 'products/levitating-galaxy-orb.html'
+      %}
+
+      {% render 'product-card',
+        id: 'sound-bars',
+        title: 'FlowBars Sound-Reactive Ambient LED Flow Light Bars',
+        price_usd: '29.99',
+        compare_price_usd: '44.99',
+        card_badge: 'Under $30 Hit',
+        badge_type: 'trending',
+        reviews_count: 145,
+        image_src: 'product-sound-bars.jpg',
+        product_url: 'products/levitating-galaxy-orb.html'
+      %}
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Trending Gadgets Grid",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Section Subtitle",
+      "default": "Trending Right Now"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Winter Boredom Busters"
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "Link Button Label",
+      "default": "View All"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "Link Button URL"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Optional Collection to display"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 12,
+      "step": 2,
+      "default": 4,
+      "label": "Number of products to show"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Shopify Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Select Product"
+        },
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Custom Badge Text",
+          "default": "Christmas Must-Have"
+        },
+        {
+          "type": "select",
+          "id": "badge_type",
+          "label": "Badge Color Style",
+          "options": [
+            { "value": "christmas", "label": "Frosted Cranberry (Red)" },
+            { "value": "trending", "label": "Frost Blue" }
+          ],
+          "default": "christmas"
+        },
+        {
+          "type": "text",
+          "id": "fallback_title",
+          "label": "Fallback Title (if product unselected)",
+          "default": "Holiday Tech Gadget"
+        },
+        {
+          "type": "text",
+          "id": "fallback_price",
+          "label": "Fallback Price (USD)",
+          "default": "49.99"
+        },
+        {
+          "type": "text",
+          "id": "fallback_compare_price",
+          "label": "Fallback Compare Price",
+          "default": "69.99"
+        }
+      ]
+    },
+    {
+      "type": "custom_item",
+      "name": "Custom Gadget Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Levitating Galaxy Orb Ambient Lamp"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Price (e.g. 49.99)",
+          "default": "49.99"
+        },
+        {
+          "type": "text",
+          "id": "compare_price",
+          "label": "Compare at Price",
+          "default": "69.99"
+        },
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Badge Text",
+          "default": "Christmas Must-Have"
+        },
+        {
+          "type": "select",
+          "id": "badge_type",
+          "label": "Badge Color Style",
+          "options": [
+            { "value": "christmas", "label": "Frosted Cranberry (Red)" },
+            { "value": "trending", "label": "Frost Blue" }
+          ],
+          "default": "christmas"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Product Image"
+        },
+        {
+          "type": "text",
+          "id": "image_filename",
+          "label": "Or Theme Asset Filename",
+          "default": "product-orb-lamp.jpg"
+        },
+        {
+          "type": "url",
+          "id": "product_url",
+          "label": "Product Link"
+        },
+        {
+          "type": "number",
+          "id": "reviews_count",
+          "label": "Reviews Count",
+          "default": 248
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Trending Gadgets Grid",
+      "blocks": [
+        {
+          "type": "custom_item",
+          "settings": {
+            "title": "Levitating Galaxy Orb Ambient Lamp",
+            "price": "49.99",
+            "compare_price": "69.99",
+            "badge": "Christmas Must-Have",
+            "badge_type": "christmas",
+            "image_filename": "product-orb-lamp.jpg",
+            "reviews_count": 248
+          }
+        },
+        {
+          "type": "custom_item",
+          "settings": {
+            "title": "PixelJoy Retro RGB Smart Desktop Pixel Clock",
+            "price": "59.99",
+            "compare_price": "79.99",
+            "badge": "Aesthetic Hit",
+            "badge_type": "trending",
+            "image_filename": "product-pixel-clock.jpg",
+            "reviews_count": 189
+          }
+        },
+        {
+          "type": "custom_item",
+          "settings": {
+            "title": "CyberWave Transparent Retro Handheld Game Console",
+            "price": "39.99",
+            "compare_price": "54.99",
+            "badge": "Boredom Buster",
+            "badge_type": "christmas",
+            "image_filename": "product-pocket-console.jpg",
+            "reviews_count": 312
+          }
+        },
+        {
+          "type": "custom_item",
+          "settings": {
+            "title": "FlowBars Sound-Reactive Ambient LED Flow Light Bars",
+            "price": "29.99",
+            "compare_price": "44.99",
+            "badge": "Under $30 Hit",
+            "badge_type": "trending",
+            "image_filename": "product-sound-bars.jpg",
+            "reviews_count": 145
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

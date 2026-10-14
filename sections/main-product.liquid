@@ -1,0 +1,392 @@
+{%- liquid
+  if product != blank
+    assign current_variant = product.selected_or_first_available_variant
+    assign pdp_title = product.title
+    assign pdp_price_raw = current_variant.price | divided_by: 100.0
+    assign pdp_price_display = current_variant.price | money
+    if current_variant.compare_at_price > current_variant.price
+      assign pdp_compare_price_raw = current_variant.compare_at_price | divided_by: 100.0
+      assign pdp_compare_price_display = current_variant.compare_at_price | money
+    endif
+    assign pdp_id = current_variant.id
+    if product.featured_image != blank
+      assign pdp_image_url = product.featured_image | image_url: width: 800
+    else
+      assign pdp_image_url = 'product-orb-lamp.jpg' | asset_url
+    endif
+  else
+    assign pdp_title = section.settings.fallback_title | default: 'Levitating Galaxy Orb Ambient Room Lamp'
+    assign pdp_price_raw = '49.99'
+    assign pdp_price_display = '$49.99'
+    assign pdp_compare_price_raw = '69.99'
+    assign pdp_compare_price_display = '$69.99'
+    assign pdp_id = 'orb-lamp'
+    assign pdp_image_url = 'product-orb-lamp.jpg' | asset_url
+  endif
+-%}
+
+<div class="pdp-container pdp-grid-desktop" id="pdp-{{ section.id }}">
+  <!-- 1. Swipeable 1:1 Image Gallery -->
+  <div class="pdp-gallery-container reveal-on-scroll">
+    <div class="pdp-swipe-slider">
+      {%- if product != blank and product.images.size > 0 -%}
+        {%- for img in product.images -%}
+          <div class="pdp-slide">
+            <img src="{{ img | image_url: width: 800 }}" alt="{{ img.alt | default: pdp_title | escape }}" width="600" height="600">
+          </div>
+        {%- endfor -%}
+      {%- else -%}
+        <div class="pdp-slide">
+          <img src="{{ 'product-orb-lamp.jpg' | asset_url }}" alt="Levitating Galaxy Orb Lamp" width="600" height="600">
+        </div>
+        <div class="pdp-slide">
+          <img src="{{ 'social-unboxing-1.jpg' | asset_url }}" alt="Maya unboxing galaxy orb" width="600" height="600" style="object-position: top;">
+        </div>
+        <div class="pdp-slide">
+          <img src="{{ 'hero-winter-gadgets.jpg' | asset_url }}" alt="Galaxy Orb setup in room" width="600" height="600">
+        </div>
+      {%- endif -%}
+    </div>
+
+    <!-- Dot Indicators -->
+    <div class="pdp-dot-indicators" aria-hidden="true">
+      <span class="pdp-dot is-active"></span>
+      <span class="pdp-dot"></span>
+      <span class="pdp-dot"></span>
+    </div>
+  </div>
+
+  <!-- 2. Product Details & Purchase Block -->
+  <div class="pdp-content-area">
+    <div class="pdp-delivery-badge-pill">
+      <span>🎄 {{ section.settings.delivery_guarantee_text | default: 'Guaranteed Christmas Delivery to' }}</span>
+      <strong class="current-country-name">United States</strong>
+    </div>
+
+    <h1 class="pdp-title">{{ pdp_title }}</h1>
+
+    <div class="card-rating-strip" style="margin-bottom: 14px;">
+      <span class="card-stars">★★★★★</span>
+      <span style="font-weight: 700; color: var(--color-text-main);">{{ section.settings.rating_score | default: '4.98 / 5.0' }}</span>
+      <span>({{ section.settings.review_count | default: '382' }} verified teen reviews)</span>
+    </div>
+
+    <!-- Pricing Block -->
+    <div class="pdp-pricing-card reveal-on-scroll">
+      <div class="pdp-price-row">
+        <span class="pdp-main-price" data-price-usd="{{ pdp_price_raw }}">{{ pdp_price_display }}</span>
+        {%- if pdp_compare_price_raw != blank -%}
+          <span class="pdp-compare-price" data-price-usd="{{ pdp_compare_price_raw }}">{{ pdp_compare_price_display }}</span>
+          <span class="pdp-discount-badge">{{ section.settings.discount_badge_text | default: 'SAVE 28%' }}</span>
+        {%- endif -%}
+      </div>
+      <div class="pdp-duties-badge">
+        <span>🛡️</span>
+        <span>{{ section.settings.duties_badge_text | default: 'Pre-paid Duties Included at Checkout (Zero Customs Taxes)' }}</span>
+      </div>
+    </div>
+
+    <!-- Delivery Estimator Widget -->
+    <div class="delivery-estimator-box reveal-on-scroll delay-1">
+      <div class="estimator-header">
+        <span>⚡</span>
+        <span>{{ section.settings.cutoff_timer_title | default: 'Christmas Delivery Cutoff Timer' }}</span>
+      </div>
+      <p class="estimator-countdown">
+        Order in the next 
+        <span class="estimator-timer-digits" id="CountdownHours">{{ section.settings.timer_hours | default: '08' }}</span>h 
+        <span class="estimator-timer-digits" id="CountdownMins">{{ section.settings.timer_mins | default: '42' }}</span>m 
+        for guaranteed delivery to <strong class="current-country-name">United States</strong> by <strong>Dec 22</strong>.
+      </p>
+    </div>
+
+    <!-- Primary Add to Cart CTA -->
+    <div class="pdp-action-group reveal-on-scroll delay-2" style="margin-bottom: 24px;">
+      <button 
+        type="button" 
+        class="btn-tactile btn-primary" 
+        style="width: 100%; padding: 16px; font-size: 1.15rem;"
+        data-quick-add 
+        data-product-id="{{ pdp_id }}"
+        data-product-title="{{ pdp_title | escape }}"
+        data-product-price="{{ pdp_price_raw }}"
+        data-product-image="{{ pdp_image_url }}"
+      >
+        <span>Add to Bag &bull; <span data-price-usd="{{ pdp_price_raw }}">{{ pdp_price_display }}</span></span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </button>
+
+      <div style="display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 10px; font-size: 0.76rem; color: var(--color-text-muted);">
+        <span>✓ {{ section.settings.stock_label | default: 'In Stock Ready to Ship' }}</span>
+        <span>&bull;</span>
+        <span>✓ {{ section.settings.returns_label | default: '60-Day Holiday Returns' }}</span>
+      </div>
+    </div>
+
+    <!-- Reusable Collapsible Accordions (Blocks) -->
+    <div class="pdp-accordions" data-accordion-single>
+      {%- if section.blocks.size > 0 -%}
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'accordion' -%}
+              <div class="accordion-item {% if block.settings.is_open or forloop.first %}is-open{% endif %}" {{ block.shopify_attributes }}>
+                <button type="button" class="accordion-trigger">
+                  <div class="accordion-title-wrap">
+                    {%- if block.settings.icon != blank -%}
+                      <span>{{ block.settings.icon }}</span>
+                    {%- endif -%}
+                    <span>{{ block.settings.title | escape }}</span>
+                  </div>
+                  <span class="accordion-icon-toggle">▼</span>
+                </button>
+                <div class="accordion-body" {% if block.settings.is_open or forloop.first %}style="max-height: 350px;"{% endif %}>
+                  {{ block.settings.content }}
+                </div>
+              </div>
+          {%- endcase -%}
+        {%- endfor -%}
+      {%- else -%}
+        <!-- Default Fallback Accordions -->
+        <div class="accordion-item is-open">
+          <button type="button" class="accordion-trigger">
+            <div class="accordion-title-wrap">
+              <span>❄️</span>
+              <span>How It Beats Winter Boredom</span>
+            </div>
+            <span class="accordion-icon-toggle">▼</span>
+          </button>
+          <div class="accordion-body" style="max-height: 250px;">
+            <p>
+              When cold winter weather traps you inside, your room environment matters. The Levitating Galaxy Orb uses real magnetic repulsion physics to float continuously with zero physical contacts. It projects soothing, cosmic aurora nebula light shifts across your ceiling and walls—turning a dull winter bedroom into an interactive aesthetic universe.
+            </p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button type="button" class="accordion-trigger">
+            <div class="accordion-title-wrap">
+              <span>📦</span>
+              <span>What's In The Box</span>
+            </div>
+            <span class="accordion-icon-toggle">▼</span>
+          </button>
+          <div class="accordion-body">
+            <ul style="padding-left: 18px; margin-top: 6px; display: flex; flex-direction: column; gap: 4px;">
+              <li>1x Magnetic Levitation Base (Slate Grey finish)</li>
+              <li>1x 3D High-Detail Galaxy Nebula Orb (14cm diameter)</li>
+              <li>1x Braided USB-C Power Cable (Universal 100-240V compatible)</li>
+              <li>1x Wireless Remote for RGB Color Cycling &amp; Speed</li>
+              <li>1x Holiday Quick-Start Guide &amp; Calibration Tool</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button type="button" class="accordion-trigger">
+            <div class="accordion-title-wrap">
+              <span>🚚</span>
+              <span>Shipping &amp; Returns (DDP Guaranteed)</span>
+            </div>
+            <span class="accordion-icon-toggle">▼</span>
+          </button>
+          <div class="accordion-body">
+            <p>
+              All international orders ship via priority air express (5-8 business days). We utilize Delivered Duty Paid (DDP)—meaning all VAT, import tariffs, and customs clearances are pre-paid by us. You will never pay any surprise fees at the door. If your teen isn't thrilled, return it through Jan 31, 2027 for a 100% refund.
+            </p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button type="button" class="accordion-trigger">
+            <div class="accordion-title-wrap">
+              <span>🛡️</span>
+              <span>Parent Safety &amp; Specs</span>
+            </div>
+            <span class="accordion-icon-toggle">▼</span>
+          </button>
+          <div class="accordion-body">
+            <p>
+              Designed specifically for ages 10+. Fully CE, FCC, and RoHS certified. Built with shatter-resistant PLA polymer and cool-to-the-touch LED technology that never overheats even if left floating 24/7. Automatic fail-safe magnet catch snaps the orb safely to the base if power is disconnected.
+            </p>
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+<!-- Sticky Bottom Bar -->
+{%- if section.settings.show_sticky_bar -%}
+  <div class="sticky-bottom-bar" aria-label="Quick Purchase Bar">
+    <div class="sticky-bar-price-info">
+      <span class="sticky-bar-price" data-price-usd="{{ pdp_price_raw }}">{{ pdp_price_display }}</span>
+      <span class="sticky-bar-stock">✓ Ready to Ship</span>
+    </div>
+    <button 
+      type="button" 
+      class="btn-tactile btn-primary sticky-bar-atc" 
+      data-quick-add 
+      data-product-id="{{ pdp_id }}"
+      data-product-title="{{ pdp_title | escape }}"
+      data-product-price="{{ pdp_price_raw }}"
+      data-product-image="{{ pdp_image_url }}"
+    >
+      Add to Cart &bull; <span data-price-usd="{{ pdp_price_raw }}">{{ pdp_price_display }}</span>
+    </button>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Main Product (PDP)",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_sticky_bar",
+      "label": "Show Sticky Bottom Add to Cart Bar",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "fallback_title",
+      "label": "Demo / Fallback Product Title",
+      "default": "Levitating Galaxy Orb Ambient Room Lamp"
+    },
+    {
+      "type": "text",
+      "id": "delivery_guarantee_text",
+      "label": "Delivery Guarantee Tag",
+      "default": "Guaranteed Christmas Delivery to"
+    },
+    {
+      "type": "text",
+      "id": "rating_score",
+      "label": "Rating Score",
+      "default": "4.98 / 5.0"
+    },
+    {
+      "type": "text",
+      "id": "review_count",
+      "label": "Review Count",
+      "default": "382"
+    },
+    {
+      "type": "text",
+      "id": "discount_badge_text",
+      "label": "Discount Badge Text",
+      "default": "SAVE 28%"
+    },
+    {
+      "type": "text",
+      "id": "duties_badge_text",
+      "label": "Duties Badge Text",
+      "default": "Pre-paid Duties Included at Checkout (Zero Customs Taxes)"
+    },
+    {
+      "type": "text",
+      "id": "cutoff_timer_title",
+      "label": "Cutoff Timer Title",
+      "default": "Christmas Delivery Cutoff Timer"
+    },
+    {
+      "type": "text",
+      "id": "timer_hours",
+      "label": "Default Timer Hours",
+      "default": "08"
+    },
+    {
+      "type": "text",
+      "id": "timer_mins",
+      "label": "Default Timer Minutes",
+      "default": "42"
+    },
+    {
+      "type": "text",
+      "id": "stock_label",
+      "label": "Stock Status Label",
+      "default": "In Stock Ready to Ship"
+    },
+    {
+      "type": "text",
+      "id": "returns_label",
+      "label": "Returns Label",
+      "default": "60-Day Holiday Returns"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "accordion",
+      "name": "Collapsible Accordion",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Accordion Icon or Emoji",
+          "default": "❄️"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Accordion Title",
+          "default": "How It Beats Winter Boredom"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Accordion Body Content",
+          "default": "<p>When cold winter weather traps you inside, your room environment matters. The Levitating Galaxy Orb uses real magnetic repulsion physics to float continuously with zero physical contacts. It projects soothing, cosmic aurora nebula light shifts across your ceiling and walls—turning a dull winter bedroom into an interactive aesthetic universe.</p>"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_open",
+          "label": "Open by Default",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Main Product (PDP)",
+      "blocks": [
+        {
+          "type": "accordion",
+          "settings": {
+            "icon": "❄️",
+            "title": "How It Beats Winter Boredom",
+            "content": "<p>When cold winter weather traps you inside, your room environment matters. The Levitating Galaxy Orb uses real magnetic repulsion physics to float continuously with zero physical contacts. It projects soothing, cosmic aurora nebula light shifts across your ceiling and walls—turning a dull winter bedroom into an interactive aesthetic universe.</p>",
+            "is_open": true
+          }
+        },
+        {
+          "type": "accordion",
+          "settings": {
+            "icon": "📦",
+            "title": "What's In The Box",
+            "content": "<ul><li>1x Magnetic Levitation Base (Slate Grey finish)</li><li>1x 3D High-Detail Galaxy Nebula Orb (14cm diameter)</li><li>1x Braided USB-C Power Cable (Universal 100-240V compatible)</li><li>1x Wireless Remote for RGB Color Cycling & Speed</li><li>1x Holiday Quick-Start Guide & Calibration Tool</li></ul>"
+          }
+        },
+        {
+          "type": "accordion",
+          "settings": {
+            "icon": "🚚",
+            "title": "Shipping & Returns (DDP Guaranteed)",
+            "content": "<p>All international orders ship via priority air express (5-8 business days). We utilize Delivered Duty Paid (DDP)—meaning all VAT, import tariffs, and customs clearances are pre-paid by us. You will never pay any surprise fees at the door. If your teen isn't thrilled, return it through Jan 31, 2027 for a 100% refund.</p>"
+          }
+        },
+        {
+          "type": "accordion",
+          "settings": {
+            "icon": "🛡️",
+            "title": "Parent Safety & Specs",
+            "content": "<p>Designed specifically for ages 10+. Fully CE, FCC, and RoHS certified. Built with shatter-resistant PLA polymer and cool-to-the-touch LED technology that never overheats even if left floating 24/7. Automatic fail-safe magnet catch snaps the orb safely to the base if power is disconnected.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

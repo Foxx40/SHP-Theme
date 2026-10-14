@@ -1,0 +1,283 @@
+<section class="social-proof-section" id="social-proof-{{ section.id }}">
+  <div class="section-header">
+    <div class="section-title-wrap">
+      {%- if section.settings.subtitle != blank -%}
+        <span class="section-subtitle">{{ section.settings.subtitle | escape }}</span>
+      {%- endif -%}
+      <h2 class="section-title">{{ section.settings.title | default: 'Unboxing the Vibes 🎄' | escape }}</h2>
+    </div>
+  </div>
+
+  <div class="social-video-scroller">
+    {%- if section.blocks.size > 0 -%}
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'review_card' -%}
+            {%- assign media_src = 'social-unboxing-1.jpg' | asset_url -%}
+            {%- if block.settings.image != blank -%}
+              {%- assign media_src = block.settings.image | image_url: width: 600 -%}
+            {%- elsif block.settings.image_filename != blank -%}
+              {%- assign media_src = block.settings.image_filename | asset_url -%}
+            {%- endif -%}
+
+            <div class="social-video-card reveal-on-scroll delay-{{ forloop.index }}" {{ block.shopify_attributes }}>
+              <img 
+                class="social-video-media" 
+                src="{{ media_src }}" 
+                alt="{{ block.settings.username | escape }} unboxing" 
+                loading="lazy"
+                width="360"
+                height="640"
+              >
+              <div class="social-video-overlay">
+                <div class="social-top-badge">
+                  <span>★ {{ block.settings.rating | default: '5.0' }}</span>
+                  <span>{{ block.settings.badge_label | default: 'Verified Teen Buyer' | escape }}</span>
+                </div>
+                <div class="social-play-indicator" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                  </svg>
+                </div>
+                <div class="social-bottom-info">
+                  <div class="social-user-row">
+                    <span>{{ block.settings.username | escape }}</span>
+                    {%- if block.settings.flag_emoji != blank -%}
+                      <span class="social-user-flag">{{ block.settings.flag_emoji }}</span>
+                    {%- endif -%}
+                    {%- if block.settings.is_verified -%}
+                      <span class="social-verified-tag">✓</span>
+                    {%- endif -%}
+                  </div>
+                  <p class="social-comment-quote">"{{ block.settings.quote | escape }}"</p>
+                </div>
+              </div>
+            </div>
+        {%- endcase -%}
+      {%- endfor -%}
+    {%- else -%}
+      <!-- Default Demonstration Cards -->
+      <div class="social-video-card reveal-on-scroll">
+        <img class="social-video-media" src="{{ 'social-unboxing-1.jpg' | asset_url }}" alt="Maya unboxing galaxy orb" loading="lazy">
+        <div class="social-video-overlay">
+          <div class="social-top-badge">
+            <span>★ 5.0</span>
+            <span>Verified Teen Buyer</span>
+          </div>
+          <div class="social-play-indicator" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+          </div>
+          <div class="social-bottom-info">
+            <div class="social-user-row">
+              <span>@maya_wintervibes</span>
+              <span class="social-user-flag">🇺🇸</span>
+              <span class="social-verified-tag">✓</span>
+            </div>
+            <p class="social-comment-quote">"Literally fixed my winter boredom in 5 mins. My room aesthetic is completely unmatched now!"</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="social-video-card reveal-on-scroll delay-1">
+        <img class="social-video-media" src="{{ 'product-pixel-clock.jpg' | asset_url }}" alt="Leo testing PixelJoy clock" loading="lazy" style="filter: brightness(0.85);">
+        <div class="social-video-overlay">
+          <div class="social-top-badge">
+            <span>★ 5.0</span>
+            <span>Verified Gift Recipient</span>
+          </div>
+          <div class="social-play-indicator" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+          </div>
+          <div class="social-bottom-info">
+            <div class="social-user-row">
+              <span>@leo_techboy</span>
+              <span class="social-user-flag">🇬🇧</span>
+              <span class="social-verified-tag">✓</span>
+            </div>
+            <p class="social-comment-quote">"The holiday pixel tree animation is so sick. Clicky buttons feel like a high-end mechanical keyboard."</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="social-video-card reveal-on-scroll delay-2">
+        <img class="social-video-media" src="{{ 'product-pocket-console.jpg' | asset_url }}" alt="Alex gaming on CyberWave" loading="lazy" style="filter: brightness(0.85);">
+        <div class="social-video-overlay">
+          <div class="social-top-badge">
+            <span>★ 5.0</span>
+            <span>Christmas Hit</span>
+          </div>
+          <div class="social-play-indicator" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+          </div>
+          <div class="social-bottom-info">
+            <div class="social-user-row">
+              <span>@alex_gameroom</span>
+              <span class="social-user-flag">🇨🇦</span>
+              <span class="social-verified-tag">✓</span>
+            </div>
+            <p class="social-comment-quote">"Snowed in with minus 15 outside, but this little console with 500 retro games kept us entertained all weekend."</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="social-video-card reveal-on-scroll delay-3">
+        <img class="social-video-media" src="{{ 'product-sound-bars.jpg' | asset_url }}" alt="Sophia light bars" loading="lazy" style="filter: brightness(0.85);">
+        <div class="social-video-overlay">
+          <div class="social-top-badge">
+            <span>★ 5.0</span>
+            <span>Parent Verified</span>
+          </div>
+          <div class="social-play-indicator" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+          </div>
+          <div class="social-bottom-info">
+            <div class="social-user-row">
+              <span>@sophia_vibes</span>
+              <span class="social-user-flag">🇩🇪</span>
+              <span class="social-verified-tag">✓</span>
+            </div>
+            <p class="social-comment-quote">"Arrived in Munich in 4 days! No extra customs taxes. Plugs straight into USB-C. Huge thumbs up!"</p>
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Social Proof Video Grid",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Section Subtitle",
+      "default": "Real Teen Reviews"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Unboxing the Vibes 🎄"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review_card",
+      "name": "Social Review Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Vertical Image (9:16)"
+        },
+        {
+          "type": "text",
+          "id": "image_filename",
+          "label": "Or Theme Asset Filename",
+          "default": "social-unboxing-1.jpg"
+        },
+        {
+          "type": "text",
+          "id": "rating",
+          "label": "Rating Score",
+          "default": "5.0"
+        },
+        {
+          "type": "text",
+          "id": "badge_label",
+          "label": "Badge Label",
+          "default": "Verified Teen Buyer"
+        },
+        {
+          "type": "text",
+          "id": "username",
+          "label": "Username",
+          "default": "@maya_wintervibes"
+        },
+        {
+          "type": "text",
+          "id": "flag_emoji",
+          "label": "Country Flag Emoji",
+          "default": "🇺🇸"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_verified",
+          "label": "Verified Buyer Tick (✓)",
+          "default": true
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Customer Review Quote",
+          "default": "Literally fixed my winter boredom in 5 mins. My room aesthetic is completely unmatched now!"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Social Proof Video Grid",
+      "blocks": [
+        {
+          "type": "review_card",
+          "settings": {
+            "image_filename": "social-unboxing-1.jpg",
+            "rating": "5.0",
+            "badge_label": "Verified Teen Buyer",
+            "username": "@maya_wintervibes",
+            "flag_emoji": "🇺🇸",
+            "is_verified": true,
+            "quote": "Literally fixed my winter boredom in 5 mins. My room aesthetic is completely unmatched now!"
+          }
+        },
+        {
+          "type": "review_card",
+          "settings": {
+            "image_filename": "product-pixel-clock.jpg",
+            "rating": "5.0",
+            "badge_label": "Verified Gift Recipient",
+            "username": "@leo_techboy",
+            "flag_emoji": "🇬🇧",
+            "is_verified": true,
+            "quote": "The holiday pixel tree animation is so sick. Clicky buttons feel like a high-end mechanical keyboard."
+          }
+        },
+        {
+          "type": "review_card",
+          "settings": {
+            "image_filename": "product-pocket-console.jpg",
+            "rating": "5.0",
+            "badge_label": "Christmas Hit",
+            "username": "@alex_gameroom",
+            "flag_emoji": "🇨🇦",
+            "is_verified": true,
+            "quote": "Snowed in with minus 15 outside, but this little console with 500 retro games kept us entertained all weekend."
+          }
+        },
+        {
+          "type": "review_card",
+          "settings": {
+            "image_filename": "product-sound-bars.jpg",
+            "rating": "5.0",
+            "badge_label": "Parent Verified",
+            "username": "@sophia_vibes",
+            "flag_emoji": "🇩🇪",
+            "is_verified": true,
+            "quote": "Arrived in Munich in 4 days! No extra customs taxes. Plugs straight into USB-C. Huge thumbs up!"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

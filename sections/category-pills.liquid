@@ -1,0 +1,167 @@
+<section class="category-pills-section" id="category-pills-{{ section.id }}" aria-label="{{ section.settings.accessibility_label | default: 'Product Categories' }}">
+  <div class="inertia-scroller" role="tablist">
+    {%- if section.blocks.size > 0 -%}
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'pill' -%}
+            {%- if block.settings.link != blank -%}
+              <a 
+                href="{{ block.settings.link }}" 
+                class="category-pill {% if block.settings.is_active or forloop.first %}is-active{% endif %}" 
+                role="tab" 
+                aria-selected="{% if block.settings.is_active or forloop.first %}true{% else %}false{% endif %}"
+                {{ block.shopify_attributes }}
+              >
+                {%- if block.settings.emoji != blank -%}
+                  <span class="pill-emoji">{{ block.settings.emoji }}</span>
+                {%- endif -%}
+                <span>{{ block.settings.label | escape }}</span>
+              </a>
+            {%- else -%}
+              <button 
+                type="button" 
+                class="category-pill {% if block.settings.is_active or forloop.first %}is-active{% endif %}" 
+                role="tab" 
+                aria-selected="{% if block.settings.is_active or forloop.first %}true{% else %}false{% endif %}"
+                data-category="{{ block.settings.category_key | default: 'all' }}"
+                {{ block.shopify_attributes }}
+              >
+                {%- if block.settings.emoji != blank -%}
+                  <span class="pill-emoji">{{ block.settings.emoji }}</span>
+                {%- endif -%}
+                <span>{{ block.settings.label | escape }}</span>
+              </button>
+            {%- endif -%}
+        {%- endcase -%}
+      {%- endfor -%}
+    {%- else -%}
+      <!-- Default fallbacks if no blocks created yet -->
+      <button type="button" class="category-pill is-active" role="tab" aria-selected="true" data-category="all">
+        <span class="pill-emoji">🔥</span> All Boredom Busters
+      </button>
+      <button type="button" class="category-pill" role="tab" aria-selected="false" data-category="gaming">
+        <span class="pill-emoji">🎮</span> Indoor Gaming
+      </button>
+      <button type="button" class="category-pill" role="tab" aria-selected="false" data-category="vibes">
+        <span class="pill-emoji">💡</span> Room Vibes &amp; LED
+      </button>
+      <button type="button" class="category-pill" role="tab" aria-selected="false" data-category="creative">
+        <span class="pill-emoji">📸</span> Creative Tech
+      </button>
+      <button type="button" class="category-pill" role="tab" aria-selected="false" data-category="chill">
+        <span class="pill-emoji">🎧</span> Winter Chill
+      </button>
+      <button type="button" class="category-pill" role="tab" aria-selected="false" data-category="under25">
+        <span class="pill-emoji">⚡</span> Under $25
+      </button>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Category Tap Pills",
+  "settings": [
+    {
+      "type": "text",
+      "id": "accessibility_label",
+      "label": "Accessibility Label",
+      "default": "Product Categories"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "pill",
+      "name": "Category Pill",
+      "settings": [
+        {
+          "type": "text",
+          "id": "emoji",
+          "label": "Emoji Icon",
+          "default": "🎮"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Pill Label",
+          "default": "Indoor Gaming"
+        },
+        {
+          "type": "text",
+          "id": "category_key",
+          "label": "Filter Tag / Category Key",
+          "default": "gaming",
+          "info": "Used for filter interactions"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Optional Link / Collection URL"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_active",
+          "label": "Active State by default",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Category Tap Pills",
+      "blocks": [
+        {
+          "type": "pill",
+          "settings": {
+            "emoji": "🔥",
+            "label": "All Boredom Busters",
+            "category_key": "all",
+            "is_active": true
+          }
+        },
+        {
+          "type": "pill",
+          "settings": {
+            "emoji": "🎮",
+            "label": "Indoor Gaming",
+            "category_key": "gaming"
+          }
+        },
+        {
+          "type": "pill",
+          "settings": {
+            "emoji": "💡",
+            "label": "Room Vibes & LED",
+            "category_key": "vibes"
+          }
+        },
+        {
+          "type": "pill",
+          "settings": {
+            "emoji": "📸",
+            "label": "Creative Tech",
+            "category_key": "creative"
+          }
+        },
+        {
+          "type": "pill",
+          "settings": {
+            "emoji": "🎧",
+            "label": "Winter Chill",
+            "category_key": "chill"
+          }
+        },
+        {
+          "type": "pill",
+          "settings": {
+            "emoji": "⚡",
+            "label": "Under $25",
+            "category_key": "under25"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

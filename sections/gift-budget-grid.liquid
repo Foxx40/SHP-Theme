@@ -1,0 +1,141 @@
+<section class="gift-budget-section" id="budget-{{ section.id }}">
+  <div class="section-header" style="padding-bottom: 8px;">
+    <div class="section-title-wrap">
+      {%- if section.settings.subtitle != blank -%}
+        <span class="section-subtitle">{{ section.settings.subtitle | escape }}</span>
+      {%- endif -%}
+      <h2 class="section-title">{{ section.settings.title | default: 'Shop by Budget' | escape }}</h2>
+    </div>
+  </div>
+
+  <div class="budget-grid-2x2">
+    {%- if section.blocks.size > 0 -%}
+      {%- for block in section.blocks -%}
+        <a href="{{ block.settings.link | default: '#trending' }}" class="budget-tile reveal-on-scroll delay-{{ forloop.index }}" {{ block.shopify_attributes }}>
+          {%- if block.settings.icon != blank -%}
+            <span class="budget-tile-icon">{{ block.settings.icon }}</span>
+          {%- endif -%}
+          <span class="budget-tile-label">{{ block.settings.label | escape }}</span>
+          {%- if block.settings.sub != blank -%}
+            <span class="budget-tile-sub">{{ block.settings.sub | escape }}</span>
+          {%- endif -%}
+        </a>
+      {%- endfor -%}
+    {%- else -%}
+      <!-- Default Demonstration Tiles -->
+      <a href="#trending" class="budget-tile reveal-on-scroll">
+        <span class="budget-tile-icon">🧦</span>
+        <span class="budget-tile-label">Stocking Stuffers</span>
+        <span class="budget-tile-sub">Under $25</span>
+      </a>
+
+      <a href="#trending" class="budget-tile reveal-on-scroll delay-1">
+        <span class="budget-tile-icon">🎁</span>
+        <span class="budget-tile-label">Popular Gadgets</span>
+        <span class="budget-tile-sub">Under $50</span>
+      </a>
+
+      <a href="#trending" class="budget-tile reveal-on-scroll delay-2">
+        <span class="budget-tile-icon">⚡</span>
+        <span class="budget-tile-label">Room Upgrades</span>
+        <span class="budget-tile-sub">Under $100</span>
+      </a>
+
+      <a href="#trending" class="budget-tile reveal-on-scroll delay-3">
+        <span class="budget-tile-icon">⭐</span>
+        <span class="budget-tile-label">Top Wishlist Items</span>
+        <span class="budget-tile-sub">Teen Favorites</span>
+      </a>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Gift Budget Grid",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Section Subtitle",
+      "default": "Holiday Gift Finder"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Shop by Budget"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "budget_tile",
+      "name": "Budget Tile",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon or Emoji",
+          "default": "🎁"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Tile Label",
+          "default": "Stocking Stuffers"
+        },
+        {
+          "type": "text",
+          "id": "sub",
+          "label": "Subtext / Price range",
+          "default": "Under $25"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Target URL / Collection"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Gift Budget Grid",
+      "blocks": [
+        {
+          "type": "budget_tile",
+          "settings": {
+            "icon": "🧦",
+            "label": "Stocking Stuffers",
+            "sub": "Under $25"
+          }
+        },
+        {
+          "type": "budget_tile",
+          "settings": {
+            "icon": "🎁",
+            "label": "Popular Gadgets",
+            "sub": "Under $50"
+          }
+        },
+        {
+          "type": "budget_tile",
+          "settings": {
+            "icon": "⚡",
+            "label": "Room Upgrades",
+            "sub": "Under $100"
+          }
+        },
+        {
+          "type": "budget_tile",
+          "settings": {
+            "icon": "⭐",
+            "label": "Top Wishlist Items",
+            "sub": "Teen Favorites"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,68 @@
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="theme-color" content="#9B1B30">
+
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@700;800&display=swap" rel="stylesheet">
+
+    {%- if page_title -%}
+      <title>{{ page_title }} &ndash; {{ shop.name }}</title>
+    {%- else -%}
+      <title>{{ shop.name }} | Beat Long Winter Indoor Boredom</title>
+    {%- endif -%}
+
+    {%- if page_description -%}
+      <meta name="description" content="{{ page_description | escape }}">
+    {%- else -%}
+      <meta name="description" content="Shop the coolest gadgets, room aesthetic upgrades, and interactive tech for teens & tweens. Guaranteed international Christmas delivery with pre-paid customs.">
+    {%- endif -%}
+
+    <!-- Open Graph & Social Cards -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{{ page_title | default: shop.name | escape }}">
+    <meta property="og:description" content="{{ page_description | default: 'Coolest gadgets & room vibes to beat winter boredom.' | escape }}">
+    <meta property="og:url" content="{{ canonical_url }}">
+    <meta property="og:site_name" content="{{ shop.name }}">
+
+    <!-- Theme Stylesheet -->
+    {{ 'theme.css' | asset_url | stylesheet_tag }}
+
+    {{ content_for_header }}
+  </head>
+
+  <body class="template-{{ template.name | handle }}">
+    <a class="skip-to-content-link btn-tactile btn-primary" href="#MainContent" style="position:absolute; top:-100px; left:10px; z-index:999; transition:top 0.2s;">
+      Skip to content
+    </a>
+
+    <!-- Top Announcement Strip -->
+    {% section 'announcement-bar' %}
+
+    <!-- Sticky Mobile Header -->
+    {% section 'header' %}
+
+    <!-- Main Content Area -->
+    <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
+      {{ content_for_layout }}
+    </main>
+
+    <!-- Footer -->
+    {% section 'footer' %}
+
+    <!-- Slide-Out Mobile Cart Drawer -->
+    {% section 'cart-drawer' %}
+
+    <!-- Drawer Overlay -->
+    <div id="DrawerOverlay" class="drawer-overlay" aria-hidden="true"></div>
+
+    <!-- Theme & Motion Scripts -->
+    <script src="{{ 'motion.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
+  </body>
+</html>

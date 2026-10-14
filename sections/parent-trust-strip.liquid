@@ -1,0 +1,220 @@
+<section class="parent-trust-section" id="trust-strip-{{ section.id }}" aria-label="{{ section.settings.section_label | default: 'Parent Reassurance & Trust Pillars' }}">
+  <div class="trust-scroller">
+    {%- if section.blocks.size > 0 -%}
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'trust_pillar' -%}
+            {%- if block.settings.link != blank -%}
+              <a href="{{ block.settings.link }}" class="trust-item reveal-on-scroll delay-{{ forloop.index }}" {{ block.shopify_attributes }}>
+            {%- else -%}
+              <div class="trust-item reveal-on-scroll delay-{{ forloop.index }}" {{ block.shopify_attributes }}>
+            {%- endif -%}
+
+              <div class="trust-icon-box {% if block.settings.is_highlight %}highlight{% endif %}">
+                {%- if block.settings.custom_emoji != blank -%}
+                  <span style="font-size: 1.3rem;">{{ block.settings.custom_emoji }}</span>
+                {%- elsif block.settings.icon_type == 'customs' -%}
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    <polyline points="9 12 11 14 15 10"></polyline>
+                  </svg>
+                {%- elsif block.settings.icon_type == 'returns' -%}
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="1 4 1 10 7 10"></polyline>
+                    <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+                  </svg>
+                {%- elsif block.settings.icon_type == 'payment' -%}
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+                    <line x1="2" y1="10" x2="22" y2="10"></line>
+                  </svg>
+                {%- else -%}
+                  <!-- Shipping Truck default -->
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="1" y="3" width="15" height="13"></rect>
+                    <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                    <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                    <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                  </svg>
+                {%- endif -%}
+              </div>
+
+              <div class="trust-info">
+                <div class="trust-info-title">{{ block.settings.title | escape }}</div>
+                {%- if block.settings.sub != blank -%}
+                  <div class="trust-info-sub">{{ block.settings.sub | escape }}</div>
+                {%- endif -%}
+              </div>
+
+            {%- if block.settings.link != blank -%}
+              </a>
+            {%- else -%}
+              </div>
+            {%- endif -%}
+        {%- endcase -%}
+      {%- endfor -%}
+    {%- else -%}
+      <!-- Default Demonstration Pillars -->
+      <div class="trust-item reveal-on-scroll">
+        <div class="trust-icon-box highlight">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <rect x="1" y="3" width="15" height="13"></rect>
+            <polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon>
+            <circle cx="5.5" cy="18.5" r="2.5"></circle>
+            <circle cx="18.5" cy="18.5" r="2.5"></circle>
+          </svg>
+        </div>
+        <div class="trust-info">
+          <div class="trust-info-title">Express Worldwide Delivery</div>
+          <div class="trust-info-sub">Guaranteed by Dec 22 or full refund</div>
+        </div>
+      </div>
+
+      <div class="trust-item reveal-on-scroll delay-1">
+        <div class="trust-icon-box">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            <polyline points="9 12 11 14 15 10"></polyline>
+          </svg>
+        </div>
+        <div class="trust-info">
+          <div class="trust-info-title">Pre-Paid Customs (DDP)</div>
+          <div class="trust-info-sub">Zero surprise fees at your doorstep</div>
+        </div>
+      </div>
+
+      <div class="trust-item reveal-on-scroll delay-2">
+        <div class="trust-icon-box">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <polyline points="1 4 1 10 7 10"></polyline>
+            <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+          </svg>
+        </div>
+        <div class="trust-info">
+          <div class="trust-info-title">Holiday Returns Thru Jan 31</div>
+          <div class="trust-info-sub">60-day stress-free exchanges</div>
+        </div>
+      </div>
+
+      <div class="trust-item reveal-on-scroll delay-3">
+        <div class="trust-icon-box">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+            <line x1="2" y1="10" x2="22" y2="10"></line>
+          </svg>
+        </div>
+        <div class="trust-info">
+          <div class="trust-info-title">Local Safe Checkout</div>
+          <div class="trust-info-sub">Apple Pay, Klarna, PayPal &amp; Cards</div>
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Parent Trust Strip",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_label",
+      "label": "Accessibility Label",
+      "default": "Parent Reassurance & Trust Pillars"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "trust_pillar",
+      "name": "Trust Pillar",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon_type",
+          "label": "Icon Style",
+          "options": [
+            { "value": "shipping", "label": "Shipping Express Truck" },
+            { "value": "customs", "label": "Customs DDP Shield" },
+            { "value": "returns", "label": "Extended Returns Arrows" },
+            { "value": "payment", "label": "Safe Payment Card" },
+            { "value": "custom", "label": "Custom Emoji" }
+          ],
+          "default": "shipping"
+        },
+        {
+          "type": "text",
+          "id": "custom_emoji",
+          "label": "Custom Emoji (Optional)",
+          "info": "Overrides the icon if filled, e.g. 🚀"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_highlight",
+          "label": "Highlight with Frosted Cranberry glow",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Pillar Title",
+          "default": "Express Worldwide Delivery"
+        },
+        {
+          "type": "text",
+          "id": "sub",
+          "label": "Subtext Description",
+          "default": "Guaranteed by Dec 22 or full refund"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Optional Link URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Parent Trust Strip",
+      "blocks": [
+        {
+          "type": "trust_pillar",
+          "settings": {
+            "icon_type": "shipping",
+            "is_highlight": true,
+            "title": "Express Worldwide Delivery",
+            "sub": "Guaranteed by Dec 22 or full refund"
+          }
+        },
+        {
+          "type": "trust_pillar",
+          "settings": {
+            "icon_type": "customs",
+            "is_highlight": false,
+            "title": "Pre-Paid Customs (DDP)",
+            "sub": "Zero surprise fees at your doorstep"
+          }
+        },
+        {
+          "type": "trust_pillar",
+          "settings": {
+            "icon_type": "returns",
+            "is_highlight": false,
+            "title": "Holiday Returns Thru Jan 31",
+            "sub": "60-day stress-free exchanges"
+          }
+        },
+        {
+          "type": "trust_pillar",
+          "settings": {
+            "icon_type": "payment",
+            "is_highlight": false,
+            "title": "Local Safe Checkout",
+            "sub": "Apple Pay, Klarna, PayPal & Cards"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

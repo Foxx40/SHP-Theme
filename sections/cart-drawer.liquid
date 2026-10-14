@@ -1,0 +1,79 @@
+<div id="CartDrawer" class="cart-drawer" role="dialog" aria-modal="true" aria-label="Shopping Cart Drawer">
+  <!-- Header -->
+  <div class="cart-drawer-header">
+    <div class="cart-drawer-title">
+      <span>🛍️</span>
+      <span>YOUR GADGET BAG</span>
+    </div>
+    <button type="button" class="drawer-close-btn" data-drawer-close="cart" aria-label="Close cart">
+      ✕
+    </button>
+  </div>
+
+  <!-- Free Shipping Progress Bar -->
+  <div class="cart-free-shipping-strip">
+    <div class="free-shipping-label" id="FreeShippingText">
+      Add <strong>$10.01</strong> more for <strong>Free Worldwide Express Shipping!</strong>
+    </div>
+    <div class="progress-bar-track">
+      <div class="progress-bar-fill" id="FreeShippingProgressBar" style="width: 83%;"></div>
+    </div>
+  </div>
+
+  <!-- Items Container -->
+  <div class="cart-items-container" id="CartDrawerItems">
+    <!-- Populated by theme.js -->
+  </div>
+
+  <!-- Christmas Gift Box & Holiday Card Add-on Checkbox -->
+  <div class="cart-upsell-box">
+    <input type="checkbox" id="GiftBoxUpsellCheckbox" class="upsell-checkbox-input">
+    <label for="GiftBoxUpsellCheckbox" class="upsell-info" style="cursor: pointer;">
+      <span class="upsell-title">🎁 Add Holiday Gift Box &amp; Teen Card (+<span data-price-usd="3.99">$3.99</span>)</span>
+      <span class="upsell-sub">Premium frosted silver wrapping with personalized holiday message</span>
+    </label>
+  </div>
+
+  <!-- Footer & Checkout Actions -->
+  <div class="cart-drawer-footer">
+    <div class="cart-subtotal-row">
+      <span class="cart-subtotal-label">Subtotal</span>
+      <span class="cart-subtotal-val" id="CartSubtotalValue">$49.99</span>
+    </div>
+
+    <div class="cart-duties-included-note">
+      🛡️ <strong>Delivered Duty Paid (DDP):</strong> Taxes and international customs are pre-paid. No surprise courier bills.
+    </div>
+
+    <!-- Direct Express Checkout Buttons -->
+    <div class="express-checkout-grid">
+      <button type="button" class="btn-tactile btn-primary" onclick="alert('Proceeding to Christmas Priority Checkout...');">
+        🔒 Standard Secure Checkout
+      </button>
+
+      <div style="display: flex; gap: 8px;">
+        <button type="button" class="btn-tactile btn-express-apple" style="flex: 1;" onclick="alert('Launching Apple Pay...');">
+          <svg width="16" height="16" viewBox="0 0 170 170" fill="currentColor">
+            <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.16-1.9-14.42-6.08-3.69-3.04-7.69-7.85-12-14.43-6.42-9.78-11.45-20.73-15.09-32.86-3.64-12.12-5.46-23.77-5.46-34.94 0-16.19 4.38-29.6 13.14-40.23 8.76-10.63 19.46-16.14 32.1-16.54 4.58 0 9.87 1.25 15.87 3.75 6 2.5 9.94 3.86 11.83 4.09 1.52-.23 5.48-1.59 11.87-4.09 6.39-2.5 11.53-3.69 15.42-3.56 11.96.65 21.6 5.25 28.91 13.8-10.43 6.31-15.54 15.11-15.33 26.4.21 8.8 3.58 16.1 10.11 21.9 6.53 5.8 14.12 9.07 22.77 9.81-2.4 7.29-5.49 14.54-9.27 21.76zM119.22 33.15c0-7.39 2.68-14.39 8.04-21 5.36-6.61 11.96-10.74 19.8-12.4 1.09 6.96-.33 13.75-4.26 20.37-3.93 6.62-9.61 11.13-17.04 13.53-.76-.17-1.95-.27-3.57-.3-1.63-.03-2.62-.09-2.97-.2z"/>
+          </svg>
+          <span>Pay</span>
+        </button>
+
+        <button type="button" class="btn-tactile btn-express-shoppay" style="flex: 1;" onclick="alert('Launching Shop Pay...');">
+          <span>Shop Pay</span>
+        </button>
+
+        <button type="button" class="btn-tactile btn-express-paypal" style="flex: 1;" onclick="alert('Launching PayPal...');">
+          <span>PayPal</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Cart Drawer",
+  "settings": []
+}
+{% endschema %}

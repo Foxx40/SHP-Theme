@@ -1,0 +1,28 @@
+{
+  "general": {
+    "skip_to_content": "Skip to content",
+    "search": "Search gadgets",
+    "cart": "Shopping Bag",
+    "currency": "Currency",
+    "region": "Region"
+  },
+  "sections": {
+    "announcement": {
+      "shipping_to": "Shipping to",
+      "guaranteed_christmas": "Guaranteed Christmas Delivery",
+      "customs_prepaid": "Customs & Duties Pre-Paid"
+    },
+    "hero": {
+      "headline": "Trapped Indoors? Level Up Your Room & Beat Winter Boredom.",
+      "cta": "Shop Winter Gadgets"
+    },
+    "cart": {
+      "title": "Your Gadget Bag",
+      "empty": "Your bag is empty",
+      "free_shipping_notice": "Add more for Free Worldwide Express Shipping!",
+      "subtotal": "Subtotal",
+      "checkout": "Standard Secure Checkout",
+      "gift_box": "Add Holiday Gift Box & Teen Card"
+    }
+  }
+}

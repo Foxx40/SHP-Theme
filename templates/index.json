@@ -1,0 +1,356 @@
+{
+  "name": "Home Page",
+  "sections": {
+    "hero_banner": {
+      "type": "hero-banner",
+      "settings": {
+        "show_snowflakes": true,
+        "urgency_tag": "🎄 Order by Dec 15 for Christmas Arrival",
+        "headline": "Trapped Indoors? Level Up Your Room & Beat Winter Boredom.",
+        "subtext": "The coolest gadgets and room tech for your Christmas Wishlist. Order by Dec 15 for Christmas arrival.",
+        "btn_text": "Shop Winter Gadgets",
+        "btn_link": "#trending",
+        "secondary_btn_text": "🎁 Explore Gift Budgets",
+        "secondary_btn_link": "#budget"
+      },
+      "blocks": {
+        "badge_1": {
+          "type": "badge",
+          "settings": {
+            "icon": "⚡",
+            "text": "Free Express Worldwide Shipping"
+          }
+        },
+        "badge_2": {
+          "type": "badge",
+          "settings": {
+            "icon": "🛡️",
+            "text": "Zero Hidden Customs Fees (DDP)"
+          }
+        },
+        "badge_3": {
+          "type": "badge",
+          "settings": {
+            "icon": "🔄",
+            "text": "60-Day Holiday Returns"
+          }
+        }
+      },
+      "block_order": [
+        "badge_1",
+        "badge_2",
+        "badge_3"
+      ]
+    },
+    "category_pills": {
+      "type": "category-pills",
+      "settings": {
+        "accessibility_label": "Product Categories"
+      },
+      "blocks": {
+        "pill_1": {
+          "type": "pill",
+          "settings": {
+            "emoji": "🔥",
+            "label": "All Boredom Busters",
+            "category_key": "all",
+            "is_active": true
+          }
+        },
+        "pill_2": {
+          "type": "pill",
+          "settings": {
+            "emoji": "🎮",
+            "label": "Indoor Gaming",
+            "category_key": "gaming"
+          }
+        },
+        "pill_3": {
+          "type": "pill",
+          "settings": {
+            "emoji": "💡",
+            "label": "Room Vibes & LED",
+            "category_key": "vibes"
+          }
+        },
+        "pill_4": {
+          "type": "pill",
+          "settings": {
+            "emoji": "📸",
+            "label": "Creative Tech",
+            "category_key": "creative"
+          }
+        },
+        "pill_5": {
+          "type": "pill",
+          "settings": {
+            "emoji": "🎧",
+            "label": "Winter Chill",
+            "category_key": "chill"
+          }
+        },
+        "pill_6": {
+          "type": "pill",
+          "settings": {
+            "emoji": "⚡",
+            "label": "Under $25",
+            "category_key": "under25"
+          }
+        }
+      },
+      "block_order": [
+        "pill_1",
+        "pill_2",
+        "pill_3",
+        "pill_4",
+        "pill_5",
+        "pill_6"
+      ]
+    },
+    "trending_grid": {
+      "type": "trending-grid",
+      "settings": {
+        "subtitle": "Trending Right Now",
+        "title": "Winter Boredom Busters",
+        "link_label": "View All",
+        "link_url": "#budget",
+        "products_to_show": 4
+      },
+      "blocks": {
+        "gadget_1": {
+          "type": "custom_item",
+          "settings": {
+            "title": "Levitating Galaxy Orb Ambient Lamp",
+            "price": "49.99",
+            "compare_price": "69.99",
+            "badge": "Christmas Must-Have",
+            "badge_type": "christmas",
+            "image_filename": "product-orb-lamp.jpg",
+            "product_url": "products/levitating-galaxy-orb.html",
+            "reviews_count": 248
+          }
+        },
+        "gadget_2": {
+          "type": "custom_item",
+          "settings": {
+            "title": "PixelJoy Retro RGB Smart Desktop Pixel Clock",
+            "price": "59.99",
+            "compare_price": "79.99",
+            "badge": "Aesthetic Hit",
+            "badge_type": "trending",
+            "image_filename": "product-pixel-clock.jpg",
+            "product_url": "products/levitating-galaxy-orb.html",
+            "reviews_count": 189
+          }
+        },
+        "gadget_3": {
+          "type": "custom_item",
+          "settings": {
+            "title": "CyberWave Transparent Retro Handheld Game Console",
+            "price": "39.99",
+            "compare_price": "54.99",
+            "badge": "Boredom Buster",
+            "badge_type": "christmas",
+            "image_filename": "product-pocket-console.jpg",
+            "product_url": "products/levitating-galaxy-orb.html",
+            "reviews_count": 312
+          }
+        },
+        "gadget_4": {
+          "type": "custom_item",
+          "settings": {
+            "title": "FlowBars Sound-Reactive Ambient LED Flow Light Bars",
+            "price": "29.99",
+            "compare_price": "44.99",
+            "badge": "Under $30 Hit",
+            "badge_type": "trending",
+            "image_filename": "product-sound-bars.jpg",
+            "product_url": "products/levitating-galaxy-orb.html",
+            "reviews_count": 145
+          }
+        }
+      },
+      "block_order": [
+        "gadget_1",
+        "gadget_2",
+        "gadget_3",
+        "gadget_4"
+      ]
+    },
+    "gift_budget_grid": {
+      "type": "gift-budget-grid",
+      "settings": {
+        "subtitle": "Holiday Gift Finder",
+        "title": "Shop by Budget"
+      },
+      "blocks": {
+        "budget_1": {
+          "type": "budget_tile",
+          "settings": {
+            "icon": "🧦",
+            "label": "Stocking Stuffers",
+            "sub": "Under $25",
+            "link": "#trending"
+          }
+        },
+        "budget_2": {
+          "type": "budget_tile",
+          "settings": {
+            "icon": "🎁",
+            "label": "Popular Gadgets",
+            "sub": "Under $50",
+            "link": "#trending"
+          }
+        },
+        "budget_3": {
+          "type": "budget_tile",
+          "settings": {
+            "icon": "⚡",
+            "label": "Room Upgrades",
+            "sub": "Under $100",
+            "link": "#trending"
+          }
+        },
+        "budget_4": {
+          "type": "budget_tile",
+          "settings": {
+            "icon": "⭐",
+            "label": "Top Wishlist Items",
+            "sub": "Teen Favorites",
+            "link": "#trending"
+          }
+        }
+      },
+      "block_order": [
+        "budget_1",
+        "budget_2",
+        "budget_3",
+        "budget_4"
+      ]
+    },
+    "parent_trust_strip": {
+      "type": "parent-trust-strip",
+      "settings": {
+        "section_label": "Parent Reassurance & Trust Pillars"
+      },
+      "blocks": {
+        "trust_1": {
+          "type": "trust_pillar",
+          "settings": {
+            "icon_type": "shipping",
+            "is_highlight": true,
+            "title": "Express Worldwide Delivery",
+            "sub": "Guaranteed by Dec 22 or full refund",
+            "link": "pages/shipping-duties.html"
+          }
+        },
+        "trust_2": {
+          "type": "trust_pillar",
+          "settings": {
+            "icon_type": "customs",
+            "is_highlight": false,
+            "title": "Pre-Paid Customs (DDP)",
+            "sub": "Zero surprise fees at your doorstep",
+            "link": "pages/shipping-duties.html"
+          }
+        },
+        "trust_3": {
+          "type": "trust_pillar",
+          "settings": {
+            "icon_type": "returns",
+            "is_highlight": false,
+            "title": "Holiday Returns Thru Jan 31",
+            "sub": "60-day stress-free exchanges",
+            "link": "pages/returns.html"
+          }
+        },
+        "trust_4": {
+          "type": "trust_pillar",
+          "settings": {
+            "icon_type": "payment",
+            "is_highlight": false,
+            "title": "Local Safe Checkout",
+            "sub": "Apple Pay, Klarna, PayPal & Cards"
+          }
+        }
+      },
+      "block_order": [
+        "trust_1",
+        "trust_2",
+        "trust_3",
+        "trust_4"
+      ]
+    },
+    "social_proof_grid": {
+      "type": "social-proof-grid",
+      "settings": {
+        "subtitle": "Real Teen Reviews",
+        "title": "Unboxing the Vibes 🎄"
+      },
+      "blocks": {
+        "review_1": {
+          "type": "review_card",
+          "settings": {
+            "image_filename": "social-unboxing-1.jpg",
+            "rating": "5.0",
+            "badge_label": "Verified Teen Buyer",
+            "username": "@maya_wintervibes",
+            "flag_emoji": "🇺🇸",
+            "is_verified": true,
+            "quote": "Literally fixed my winter boredom in 5 mins. My room aesthetic is completely unmatched now!"
+          }
+        },
+        "review_2": {
+          "type": "review_card",
+          "settings": {
+            "image_filename": "product-pixel-clock.jpg",
+            "rating": "5.0",
+            "badge_label": "Verified Gift Recipient",
+            "username": "@leo_techboy",
+            "flag_emoji": "🇬🇧",
+            "is_verified": true,
+            "quote": "The holiday pixel tree animation is so sick. Clicky buttons feel like a high-end mechanical keyboard."
+          }
+        },
+        "review_3": {
+          "type": "review_card",
+          "settings": {
+            "image_filename": "product-pocket-console.jpg",
+            "rating": "5.0",
+            "badge_label": "Christmas Hit",
+            "username": "@alex_gameroom",
+            "flag_emoji": "🇨🇦",
+            "is_verified": true,
+            "quote": "Snowed in with minus 15 outside, but this little console with 500 retro games kept us entertained all weekend."
+          }
+        },
+        "review_4": {
+          "type": "review_card",
+          "settings": {
+            "image_filename": "product-sound-bars.jpg",
+            "rating": "5.0",
+            "badge_label": "Parent Verified",
+            "username": "@sophia_vibes",
+            "flag_emoji": "🇩🇪",
+            "is_verified": true,
+            "quote": "Arrived in Munich in 4 days! No extra customs taxes. Plugs straight into USB-C. Huge thumbs up!"
+          }
+        }
+      },
+      "block_order": [
+        "review_1",
+        "review_2",
+        "review_3",
+        "review_4"
+      ]
+    }
+  },
+  "order": [
+    "hero_banner",
+    "category_pills",
+    "trending_grid",
+    "gift_budget_grid",
+    "parent_trust_strip",
+    "social_proof_grid"
+  ]
+}

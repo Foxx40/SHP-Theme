@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="theme-color" content="#9B1B30">
+    <title>Track Your Christmas Order &ndash; FROSTBYTE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/theme.css">
+  </head>
+  <body class="template-page">
+    <header class="site-header" role="banner">
+      <div class="header-container">
+        <div class="header-left">
+          <a href="../index.html" class="header-btn" aria-label="Back to Store">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </a>
+        </div>
+        <div class="header-center">
+          <a href="../index.html" class="brand-logo">
+            <span class="logo-sparkle">❄️</span>
+            <span>FROST<span class="logo-highlight">BYTE</span></span>
+          </a>
+        </div>
+        <div class="header-right">
+          <button type="button" class="header-btn cart-icon-btn" data-drawer-trigger="cart">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <path d="M16 10a4 4 0 0 1-8 0"></path>
+            </svg>
+            <span class="cart-badge-count">1</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <article class="page-track-order">
+      <header class="page-hero">
+        <div style="font-size: 2rem; margin-bottom: 6px;">📦</div>
+        <h1 class="page-hero-title">Track Your Christmas Order</h1>
+        <p class="page-hero-sub">Real-time international milestone tracking for parents and holiday shoppers.</p>
+      </header>
+
+      <div class="page-content-wrapper">
+        <div class="track-order-card reveal-on-scroll">
+          <form id="TrackOrderForm">
+            <div class="track-form-group">
+              <label for="TrackOrderNumber" class="track-label">Order Number (e.g., FB-88492)</label>
+              <input 
+                type="text" 
+                id="TrackOrderNumber" 
+                class="track-input" 
+                placeholder="FB-XXXXX" 
+                value="FB-88492" 
+                required
+              >
+            </div>
+
+            <div class="track-form-group">
+              <label for="TrackEmail" class="track-label">Email or Phone Used at Checkout</label>
+              <input 
+                type="email" 
+                id="TrackEmail" 
+                class="track-input" 
+                placeholder="parent@example.com" 
+                value="parent@example.com" 
+                required
+              >
+            </div>
+
+            <button type="submit" class="btn-tactile btn-primary" style="width: 100%; padding: 14px; margin-top: 8px;">
+              <span>Track Order Status</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
+          </form>
+
+          <!-- Live Tracking Result Simulation -->
+          <div id="TrackOrderResult" class="track-result-simulation">
+            <div style="display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid var(--color-border); padding-bottom: 10px;">
+              <div>
+                <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--color-text-muted); font-weight: 800;">Order Status</span>
+                <div style="font-size: 1.15rem; font-weight: 900; color: var(--color-success);">⚡ In Transit &ndash; On Schedule</div>
+              </div>
+              <div style="text-align: right;">
+                <span style="font-size: 0.72rem; color: var(--color-text-muted);">Order #</span>
+                <span id="TrackedOrderCode" style="font-weight: 800; font-family: var(--font-mono); color: var(--color-primary);">FB-88492</span>
+              </div>
+            </div>
+
+            <div style="margin: 12px 0; font-size: 0.86rem; color: var(--color-text-main);">
+              🎄 <strong>Estimated Delivery:</strong> December 21, 2026 (Guaranteed by Christmas)
+            </div>
+
+            <div class="track-timeline">
+              <div class="timeline-step completed">
+                <strong style="color: var(--color-text-main);">Package Dispatched via International Priority Air</strong>
+                <div style="color: var(--color-text-muted); font-size: 0.74rem;">Customs Documentation cleared (DDP Pre-Paid)</div>
+              </div>
+              <div class="timeline-step completed">
+                <strong style="color: var(--color-text-main);">Arrived at Regional Distribution Hub</strong>
+                <div style="color: var(--color-text-muted); font-size: 0.74rem;">Processed through sort facility</div>
+              </div>
+              <div class="timeline-step">
+                <strong style="color: var(--color-text-main);">Out for Local Doorstep Delivery</strong>
+                <div style="color: var(--color-text-muted); font-size: 0.74rem;">Assigned to delivery courier route</div>
+              </div>
+              <div class="timeline-step">
+                <strong style="color: var(--color-text-main);">Delivered to Recipient</strong>
+                <div style="color: var(--color-text-muted); font-size: 0.74rem;">Ready to wrap for Christmas morning!</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <div id="DrawerOverlay" class="drawer-overlay" aria-hidden="true"></div>
+    <script src="../assets/motion.js"></script>
+    <script src="../assets/theme.js"></script>
+  </body>
+</html>

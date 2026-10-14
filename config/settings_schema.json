@@ -1,0 +1,67 @@
+[
+  {
+    "name": "Theme information",
+    "theme_name": "Frostbyte - Winter Gadget Store",
+    "theme_version": "1.0.0",
+    "theme_author": "Antigravity Engineering",
+    "theme_documentation_url": "https://frostbyte-gadgets.com/docs",
+    "theme_support_url": "https://frostbyte-gadgets.com/support"
+  },
+  {
+    "name": "Color Scheme & Tokens",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_primary",
+        "label": "Primary Accent (Frosted Cranberry)",
+        "default": "#9B1B30",
+        "info": "Primary CTAs, Add to Cart, notification banner, sale badges"
+      },
+      {
+        "type": "color",
+        "id": "color_secondary",
+        "label": "Secondary Accent (Frost Blue)",
+        "default": "#2B4C5E",
+        "info": "Active states, filter tags, subheadings, accordion toggles"
+      },
+      {
+        "type": "color",
+        "id": "color_canvas",
+        "label": "Canvas Background (Winter Snow)",
+        "default": "#F8F9FA",
+        "info": "Clean off-white page background"
+      },
+      {
+        "type": "color",
+        "id": "color_surface",
+        "label": "Card / Surface Container (Soft Slate)",
+        "default": "#E9ECEF",
+        "info": "Product cards, drawer backgrounds, input fields, review tiles"
+      },
+      {
+        "type": "color",
+        "id": "color_text_main",
+        "label": "Text & Headings (Deep Navy Grey)",
+        "default": "#1E293B",
+        "info": "Body text and crisp headings"
+      }
+    ]
+  },
+  {
+    "name": "Christmas Shipping & Delivery",
+    "settings": [
+      {
+        "type": "text",
+        "id": "cutoff_date",
+        "label": "Order Cutoff Date",
+        "default": "Dec 15"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_snow_effect",
+        "label": "Enable subtle drifting snowflake parallax layer",
+        "default": true
+      }
+    ]
+  }
+]

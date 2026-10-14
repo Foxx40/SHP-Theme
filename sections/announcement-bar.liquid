@@ -1,0 +1,137 @@
+{%- if section.settings.show_announcement -%}
+  <div class="announcement-bar" id="announcement-{{ section.id }}" role="region" aria-label="Announcement">
+    <div class="announcement-container">
+      {%- if section.blocks.size > 0 -%}
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'holiday_guarantee' -%}
+              <div class="announcement-text" {{ block.shopify_attributes }}>
+                <span class="announcement-flag" aria-hidden="true">{{ block.settings.flag | default: '🇺🇸' }}</span>
+                <span>{{ block.settings.shipping_text | default: 'Shipping to' }} <strong class="current-country-name">United States</strong></span>
+                <span class="announcement-separator" aria-hidden="true">&bull;</span>
+                <span class="announcement-badge badge-delivery-pulse">
+                  🎄 {{ block.settings.delivery_text | default: 'Guaranteed Christmas Delivery' }}
+                </span>
+                <span class="announcement-separator" aria-hidden="true">&bull;</span>
+                <span>🛡️ {{ block.settings.customs_text | default: 'Customs & Duties Pre-Paid' }}</span>
+              </div>
+
+            {%- when 'custom_message' -%}
+              <div class="announcement-text" {{ block.shopify_attributes }}>
+                {%- if block.settings.link != blank -%}
+                  <a href="{{ block.settings.link }}" style="color: #FFFFFF; display: inline-flex; align-items: center; gap: 6px;">
+                    {%- if block.settings.badge_text != blank -%}
+                      <span class="announcement-badge">{{ block.settings.badge_text | escape }}</span>
+                    {%- endif -%}
+                    <span>{{ block.settings.text | escape }}</span>
+                  </a>
+                {%- else -%}
+                  {%- if block.settings.badge_text != blank -%}
+                    <span class="announcement-badge">{{ block.settings.badge_text | escape }}</span>
+                  {%- endif -%}
+                  <span>{{ block.settings.text | escape }}</span>
+                {%- endif -%}
+              </div>
+          {%- endcase -%}
+        {%- endfor -%}
+      {%- else -%}
+        <span class="announcement-flag" aria-hidden="true">🇺🇸</span>
+        <div class="announcement-text">
+          <span>Shipping to <strong class="current-country-name">United States</strong></span>
+          <span class="announcement-separator" aria-hidden="true">&bull;</span>
+          <span class="announcement-badge badge-delivery-pulse">
+            🎄 Guaranteed Christmas Delivery
+          </span>
+          <span class="announcement-separator" aria-hidden="true">&bull;</span>
+          <span>🛡️ Customs &amp; Duties Pre-Paid</span>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Announcement Bar",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_announcement",
+      "label": "Show Announcement Bar",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "holiday_guarantee",
+      "name": "Holiday & Customs Guarantee",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "flag",
+          "label": "Default Flag Emoji",
+          "default": "🇺🇸"
+        },
+        {
+          "type": "text",
+          "id": "shipping_text",
+          "label": "Shipping Prefix Text",
+          "default": "Shipping to"
+        },
+        {
+          "type": "text",
+          "id": "delivery_text",
+          "label": "Delivery Guarantee Text",
+          "default": "Guaranteed Christmas Delivery"
+        },
+        {
+          "type": "text",
+          "id": "customs_text",
+          "label": "Customs Text",
+          "default": "Customs & Duties Pre-Paid"
+        }
+      ]
+    },
+    {
+      "type": "custom_message",
+      "name": "Custom Announcement",
+      "settings": [
+        {
+          "type": "text",
+          "id": "badge_text",
+          "label": "Optional Pill Badge Text",
+          "default": "FLASH SALE"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Announcement Text",
+          "default": "Use code WINTERVIBES10 for 10% off your entire holiday gift order!"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Announcement Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Announcement Bar",
+      "blocks": [
+        {
+          "type": "holiday_guarantee",
+          "settings": {
+            "flag": "🇺🇸",
+            "shipping_text": "Shipping to",
+            "delivery_text": "Guaranteed Christmas Delivery",
+            "customs_text": "Customs & Duties Pre-Paid"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
