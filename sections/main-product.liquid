@@ -112,6 +112,14 @@
 
     <!-- Primary Add to Cart CTA -->
     <div class="pdp-action-group reveal-on-scroll delay-2" style="margin-bottom: 24px;">
+      {%- if product != blank and product.variants.size > 1 -%}
+        <label for="ProductVariant-{{ section.id }}" style="display:block; margin-bottom:8px; font-weight:700;">Choose an option</label>
+        <select id="ProductVariant-{{ section.id }}" name="id" style="width:100%; margin-bottom:10px; padding:12px; border:1px solid var(--color-border); border-radius:var(--radius-sm); background:#fff;">
+          {%- for variant in product.variants -%}
+            <option value="{{ variant.id }}"{% if variant.id == current_variant.id %} selected{% endif %}{% unless variant.available %} disabled{% endunless %}>{{ variant.title }} — {{ variant.price | money }}{% unless variant.available %} (Sold out){% endunless %}</option>
+          {%- endfor -%}
+        </select>
+      {%- endif -%}
       <button 
         type="button" 
         class="btn-tactile btn-primary" 

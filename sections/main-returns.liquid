@@ -80,9 +80,9 @@
 
     {%- if section.settings.show_return_btn -%}
       <div style="text-align: center; margin-top: 20px;">
-        <button type="button" class="btn-tactile btn-primary" onclick="alert('Starting automated return label generator...');">
+        <a href="{{ section.settings.return_btn_link | default: routes.root_url }}" class="btn-tactile btn-primary">
           <span>{{ section.settings.return_btn_text | default: 'Start a Return or Exchange' }}</span>
-        </button>
+        </a>
       </div>
     {%- endif -%}
   </div>
@@ -158,6 +158,11 @@
       "id": "return_btn_text",
       "label": "Button Label",
       "default": "Start a Return or Exchange"
+    },
+    {
+      "type": "url",
+      "id": "return_btn_link",
+      "label": "Return portal link"
     },
     {
       "type": "header",

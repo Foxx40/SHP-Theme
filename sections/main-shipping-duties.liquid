@@ -113,7 +113,7 @@
       </p>
       {%- if section.settings.show_track_button -%}
         <div style="text-align: center; margin-top: 24px;">
-          <a href="{{ section.settings.track_button_link | default: 'track-order.html' }}" class="btn-tactile btn-primary">
+          <a href="{{ section.settings.track_button_link | default: routes.root_url }}" class="btn-tactile btn-primary">
             <span>{{ section.settings.track_button_text | default: 'Track an Existing Order' }}</span>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
               <polyline points="9 18 15 12 9 6"></polyline>

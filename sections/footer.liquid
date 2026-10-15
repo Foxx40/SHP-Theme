@@ -8,12 +8,15 @@
         {{ section.settings.newsletter_sub | default: 'Sign up for secret holiday flash drops, boredom-buster tech releases, and Christmas shipping deadline reminders.' | escape }}
       </p>
 
-      <form class="footer-newsletter-form" onsubmit="event.preventDefault(); alert('🎉 Thank you! Check your email for your 10% OFF holiday code: WINTERVIBES10');">
-        <input type="email" class="footer-input" placeholder="Enter parent or shopper email..." required aria-label="Email address for discount">
+      {% form 'customer', class: 'footer-newsletter-form' %}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <input type="email" name="contact[email]" class="footer-input" placeholder="Enter email address..." required aria-label="Email address for newsletter">
         <button type="submit" class="btn-tactile btn-primary" style="padding: 13px;">
           {{ section.settings.newsletter_btn | default: 'Claim 10% Holiday Discount' | escape }}
         </button>
-      </form>
+        {%- if form.posted_successfully? -%}<p class="form-status" role="status">Thanks for subscribing.</p>{%- endif -%}
+        {%- if form.errors -%}<p class="form-status" role="alert">{{ form.errors | default_errors }}</p>{%- endif -%}
+      {% endform %}
     </div>
   {%- endif -%}
 
@@ -65,10 +68,10 @@
       <div>
         <h4 class="footer-col-title">International &amp; Help</h4>
         <ul class="footer-nav-list">
-          <li><a href="pages/track-order.html" class="footer-nav-link">Track Your Package</a></li>
-          <li><a href="pages/shipping-duties.html" class="footer-nav-link">Shipping &amp; Duties (DDP)</a></li>
-          <li><a href="pages/returns.html" class="footer-nav-link">60-Day Holiday Returns</a></li>
-          <li><a href="pages/faq.html" class="footer-nav-link">Parent Safety &amp; Adapters FAQ</a></li>
+          <li><a href="{{ routes.root_url }}" class="footer-nav-link">Track Your Package</a></li>
+          <li><a href="{{ routes.root_url }}" class="footer-nav-link">Shipping &amp; Duties (DDP)</a></li>
+          <li><a href="{{ routes.root_url }}" class="footer-nav-link">60-Day Holiday Returns</a></li>
+          <li><a href="{{ routes.root_url }}" class="footer-nav-link">Parent Safety &amp; Adapters FAQ</a></li>
           <li><a href="mailto:support@frostbyte-gadgets.com" class="footer-nav-link">24/7 Holiday Support</a></li>
         </ul>
       </div>
@@ -81,7 +84,14 @@
       <label for="footer-currency-select" style="font-size: 0.76rem; color: #94A3B8; text-transform: uppercase; font-weight: 700; display: block; margin-bottom: 6px;">
         Region &amp; Currency
       </label>
-      <select id="footer-currency-select" class="country-currency-select drawer-country-select" style="background:#1E293B; color:#FFFFFF; border-color: rgba(255,255,255,0.2);">
+      {% form 'localization', id: 'FooterLocalizationForm' %}
+        <select id="footer-currency-select" name="country_code" class="country-currency-select drawer-country-select" style="background:#1E293B; color:#FFFFFF; border-color: rgba(255,255,255,0.2);" onchange="this.form.submit()">
+          {%- for country in localization.available_countries -%}
+            <option value="{{ country.iso_code }}"{% if country.iso_code == localization.country.iso_code %} selected{% endif %}>{{ country.name }} ({{ country.currency.iso_code }} {{ country.currency.symbol }})</option>
+          {%- endfor -%}
+        </select>
+      {% endform %}
+      <select aria-hidden="true" tabindex="-1" style="display:none" class="country-currency-select drawer-country-select">
         <option value="USD">🇺🇸 United States (USD $)</option>
         <option value="GBP">🇬🇧 United Kingdom (GBP £)</option>
         <option value="EUR">🇪🇺 Europe / Eurozone (EUR €)</option>

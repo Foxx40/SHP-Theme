@@ -11,11 +11,13 @@
   - reviews_count: Number
   - image_src: String asset image name or image object
   - product_url: String url
+  - show_quick_add: Boolean
+  - delivery_text: String
 {% endcomment %}
 
 {%- liquid
   if product != blank
-    assign card_id = product.id
+    assign card_id = product.selected_or_first_available_variant.id
     assign card_title = product.title
     assign card_url = product.url
     assign card_price_raw = product.price | divided_by: 100.0
@@ -34,9 +36,9 @@
       assign badge_type = 'christmas'
     endif
   else
-    assign card_id = id | default: 'orb-lamp'
+    assign card_id = blank
     assign card_title = title | default: 'Levitating Galaxy Orb Ambient Lamp'
-    assign card_url = product_url | default: 'products/levitating-galaxy-orb.html'
+    assign card_url = product_url | default: routes.root_url
     assign card_price_raw = price_usd | default: '49.99'
     assign card_price_display = '$' | append: card_price_raw
     if compare_price_usd != blank
@@ -72,6 +74,7 @@
     </a>
 
     <!-- Quick Add "+" Button -->
+    {%- if show_quick_add != false and card_id != blank -%}
     <button 
       type="button" 
       class="quick-add-btn" 
@@ -87,6 +90,7 @@
         <line x1="5" y1="12" x2="19" y2="12"></line>
       </svg>
     </button>
+    {%- endif -%}
   </div>
 
   <div class="card-content">
@@ -108,8 +112,10 @@
       {%- endif -%}
     </div>
 
+    {%- if delivery_text != blank -%}
     <div class="card-delivery-tag">
-      <span>🎄 Guaranteed Dec 22 Delivery</span>
+      <span>🎄 {{ delivery_text | escape }}</span>
     </div>
+    {%- endif -%}
   </div>
 </article>

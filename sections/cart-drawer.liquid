@@ -1,4 +1,4 @@
-<div id="CartDrawer" class="cart-drawer" role="dialog" aria-modal="true" aria-label="Shopping Cart Drawer">
+<div id="CartDrawer" class="cart-drawer" role="dialog" aria-modal="true" aria-label="Shopping Cart Drawer" data-free-shipping-threshold="{{ section.settings.free_shipping_threshold | default: 60 }}">
   <!-- Header -->
   <div class="cart-drawer-header">
     <div class="cart-drawer-title">
@@ -33,24 +33,25 @@
       </div>
       <div style="display: flex; flex-direction: column; gap: 8px;">
         {%- for block in section.blocks -%}
-          {%- if block.type == 'quick_upsell' -%}
+          {%- if block.type == 'quick_upsell' and block.settings.product != blank -%}
             <div class="drawer-upsell-item" {{ block.shopify_attributes }} style="display: flex; align-items: center; justify-content: space-between; background: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-sm); padding: 8px 10px;">
               <div style="display: flex; align-items: center; gap: 8px;">
-                {%- if block.settings.image != blank -%}
-                  <img src="{{ block.settings.image | image_url: width: 80 }}" alt="{{ block.settings.title | escape }}" style="width: 36px; height: 36px; object-fit: cover; border-radius: 4px;">
+                {%- if block.settings.product.featured_image != blank -%}
+                  <img src="{{ block.settings.product.featured_image | image_url: width: 80 }}" alt="{{ block.settings.product.title | escape }}" style="width: 36px; height: 36px; object-fit: cover; border-radius: 4px;">
                 {%- else -%}
                   <span style="font-size: 1.3rem;">{{ block.settings.emoji | default: '✨' }}</span>
                 {%- endif -%}
                 <div>
-                  <div style="font-size: 0.82rem; font-weight: 800; color: var(--color-text-main);">{{ block.settings.title }}</div>
-                  <div style="font-size: 0.76rem; font-weight: 700; color: var(--color-primary);">+${{ block.settings.price | default: '9.99' }}</div>
+                  <div style="font-size: 0.82rem; font-weight: 800; color: var(--color-text-main);">{{ block.settings.product.title }}</div>
+                  <div style="font-size: 0.76rem; font-weight: 700; color: var(--color-primary);">{{ block.settings.product.price | money }}</div>
                 </div>
               </div>
               <button 
                 type="button" 
                 class="btn-tactile btn-secondary" 
                 style="padding: 4px 10px; font-size: 0.75rem;"
-                onclick="window.FROSTBYTE.cart.addItem({ id: 'upsell-{{ block.id }}', title: '{{ block.settings.title | escape }}', price: {{ block.settings.price | default: 9.99 }}, image: '{{ block.settings.image | image_url: width: 100 }}' });"
+                data-quick-add
+                data-product-id="{{ block.settings.product.selected_or_first_available_variant.id }}"
               >
                 + Add
               </button>
@@ -62,13 +63,12 @@
   {%- endif -%}
 
   <!-- Christmas Gift Box & Holiday Card Add-on Checkbox -->
-  {%- if section.settings.enable_gift_upsell -%}
+  {%- if section.settings.enable_gift_upsell and section.settings.gift_upsell_product != blank -%}
     <div class="cart-upsell-box">
-      <input type="checkbox" id="GiftBoxUpsellCheckbox" class="upsell-checkbox-input">
-      <label for="GiftBoxUpsellCheckbox" class="upsell-info" style="cursor: pointer;">
+      <button type="button" class="upsell-info" style="cursor: pointer; text-align: left;" data-quick-add data-product-id="{{ section.settings.gift_upsell_product.selected_or_first_available_variant.id }}">
         <span class="upsell-title">{{ section.settings.gift_upsell_title | default: '🎁 Add Holiday Gift Box & Teen Card' }} (+<span data-price-usd="{{ section.settings.gift_upsell_price | default: '3.99' }}">${{ section.settings.gift_upsell_price | default: '3.99' }}</span>)</span>
         <span class="upsell-sub">{{ section.settings.gift_upsell_sub | default: 'Premium frosted silver wrapping with personalized holiday message' }}</span>
-      </label>
+      </button>
     </div>
   {%- endif -%}
 
@@ -87,31 +87,33 @@
 
     <!-- Direct Express Checkout Buttons -->
     <div class="express-checkout-grid">
-      <button type="button" class="btn-tactile btn-primary" onclick="alert('Proceeding to Christmas Priority Checkout...');">
-        {{ section.settings.checkout_btn_text | default: '🔒 Standard Secure Checkout' }}
-      </button>
+      <form action="{{ routes.cart_url }}" method="post">
+        <button type="submit" name="checkout" class="btn-tactile btn-primary" style="width: 100%;">
+          {{ section.settings.checkout_btn_text | default: 'Secure checkout' }}
+        </button>
+      </form>
 
       {%- if section.settings.enable_express_apple or section.settings.enable_express_shoppay or section.settings.enable_express_paypal -%}
         <div style="display: flex; gap: 8px;">
           {%- if section.settings.enable_express_apple -%}
-            <button type="button" class="btn-tactile btn-express-apple" style="flex: 1;" onclick="alert('Launching Apple Pay...');">
+            <a href="{{ routes.cart_url }}" class="btn-tactile btn-express-apple" style="flex: 1;" aria-label="Continue to checkout">
               <svg width="16" height="16" viewBox="0 0 170 170" fill="currentColor">
                 <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.16-1.9-14.42-6.08-3.69-3.04-7.69-7.85-12-14.43-6.42-9.78-11.45-20.73-15.09-32.86-3.64-12.12-5.46-23.77-5.46-34.94 0-16.19 4.38-29.6 13.14-40.23 8.76-10.63 19.46-16.14 32.1-16.54 4.58 0 9.87 1.25 15.87 3.75 6 2.5 9.94 3.86 11.83 4.09 1.52-.23 5.48-1.59 11.87-4.09 6.39-2.5 11.53-3.69 15.42-3.56 11.96.65 21.6 5.25 28.91 13.8-10.43 6.31-15.54 15.11-15.33 26.4.21 8.8 3.58 16.1 10.11 21.9 6.53 5.8 14.12 9.07 22.77 9.81-2.4 7.29-5.49 14.54-9.27 21.76zM119.22 33.15c0-7.39 2.68-14.39 8.04-21 5.36-6.61 11.96-10.74 19.8-12.4 1.09 6.96-.33 13.75-4.26 20.37-3.93 6.62-9.61 11.13-17.04 13.53-.76-.17-1.95-.27-3.57-.3-1.63-.03-2.62-.09-2.97-.2z"/>
               </svg>
               <span>Pay</span>
-            </button>
+            </a>
           {%- endif -%}
 
           {%- if section.settings.enable_express_shoppay -%}
-            <button type="button" class="btn-tactile btn-express-shoppay" style="flex: 1;" onclick="alert('Launching Shop Pay...');">
+            <a href="{{ routes.cart_url }}" class="btn-tactile btn-express-shoppay" style="flex: 1;" aria-label="Continue to checkout">
               <span>Shop Pay</span>
-            </button>
+            </a>
           {%- endif -%}
 
           {%- if section.settings.enable_express_paypal -%}
-            <button type="button" class="btn-tactile btn-express-paypal" style="flex: 1;" onclick="alert('Launching PayPal...');">
+            <a href="{{ routes.cart_url }}" class="btn-tactile btn-express-paypal" style="flex: 1;" aria-label="Continue to checkout">
               <span>PayPal</span>
-            </button>
+            </a>
           {%- endif -%}
         </div>
       {%- endif -%}
@@ -162,6 +164,12 @@
       "id": "enable_gift_upsell",
       "label": "Enable Gift Box Upsell Checkbox",
       "default": true
+    },
+    {
+      "type": "product",
+      "id": "gift_upsell_product",
+      "label": "Gift-wrap product (optional)",
+      "info": "Select a real Shopify product to show this add-on."
     },
     {
       "type": "text",
@@ -231,6 +239,11 @@
           "type": "image_picker",
           "id": "image",
           "label": "Product Thumbnail"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Shopify product to add"
         },
         {
           "type": "text",

@@ -46,12 +46,12 @@
 
     <!-- Right: Search & Dynamic Cart -->
     <div class="header-right">
-      <button type="button" class="header-btn" onclick="alert('Search: Enter gadget name or room aesthetic item');" aria-label="Search Catalog">
+      <a href="{{ routes.search_url }}" class="header-btn" aria-label="Search catalog">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="11" cy="11" r="8"></circle>
           <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
-      </button>
+      </a>
 
       <button type="button" class="header-btn cart-icon-btn" data-drawer-trigger="cart" aria-label="View Shopping Cart">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -167,22 +167,22 @@
     <div class="drawer-section-heading">Parent &amp; International Help</div>
     <ul class="drawer-nav-list">
       <li class="drawer-nav-item">
-        <a href="pages/track-order.html" class="drawer-nav-link">
+        <a href="{{ routes.root_url }}" class="drawer-nav-link">
           <span><span class="drawer-nav-icon">📦</span>Track My Order</span>
         </a>
       </li>
       <li class="drawer-nav-item">
-        <a href="pages/shipping-duties.html" class="drawer-nav-link">
+        <a href="{{ routes.root_url }}" class="drawer-nav-link">
           <span><span class="drawer-nav-icon">🌍</span>Shipping &amp; Customs (DDP)</span>
         </a>
       </li>
       <li class="drawer-nav-item">
-        <a href="pages/returns.html" class="drawer-nav-link">
+        <a href="{{ routes.root_url }}" class="drawer-nav-link">
           <span><span class="drawer-nav-icon">🔄</span>60-Day Holiday Returns</span>
         </a>
       </li>
       <li class="drawer-nav-item">
-        <a href="pages/faq.html" class="drawer-nav-link">
+        <a href="{{ routes.root_url }}" class="drawer-nav-link">
           <span><span class="drawer-nav-icon">❓</span>Holiday FAQ &amp; Safety</span>
         </a>
       </li>
@@ -193,7 +193,14 @@
   {%- if section.settings.show_currency_selector -%}
     <div class="drawer-country-selector">
       <label class="drawer-country-label" for="drawer-country-select">Shipping Destination &amp; Currency</label>
-      <select id="drawer-country-select" class="country-currency-select drawer-country-select">
+      {% form 'localization', id: 'HeaderLocalizationForm' %}
+        <select id="drawer-country-select" name="country_code" class="country-currency-select drawer-country-select" onchange="this.form.submit()">
+          {%- for country in localization.available_countries -%}
+            <option value="{{ country.iso_code }}"{% if country.iso_code == localization.country.iso_code %} selected{% endif %}>{{ country.name }} ({{ country.currency.iso_code }} {{ country.currency.symbol }})</option>
+          {%- endfor -%}
+        </select>
+      {% endform %}
+      <select aria-hidden="true" tabindex="-1" style="display:none" class="country-currency-select drawer-country-select">
         <option value="USD">🇺🇸 United States (USD $)</option>
         <option value="GBP">🇬🇧 United Kingdom (GBP £)</option>
         <option value="EUR">🇪🇺 Europe / Eurozone (EUR €)</option>

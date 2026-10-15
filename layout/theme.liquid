@@ -80,6 +80,17 @@
     <div id="DrawerOverlay" class="drawer-overlay" aria-hidden="true"></div>
 
     <!-- Theme & Motion Scripts -->
+    <script>
+      window.FrostbyteTheme = {
+        routes: {
+          cartUrl: {{ routes.cart_url | json }},
+          cartAddUrl: {{ routes.cart_add_url | json }},
+          cartChangeUrl: {{ routes.cart_change_url | json }},
+          searchUrl: {{ routes.search_url | json }}
+        },
+        moneyFormat: {{ shop.money_with_currency_format | json }}
+      };
+    </script>
     <script src="{{ 'motion.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
   </body>

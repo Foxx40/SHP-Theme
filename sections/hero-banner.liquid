@@ -26,7 +26,8 @@
     {% if section.settings.primary_button_text_color != blank %}color: {{ section.settings.primary_button_text_color }};{% endif %}
   }
   #Hero-{{ section.id }} .hero-cta-group .btn-outline {
-    {% if section.settings.secondary_button_color != blank %}border-color: {{ section.settings.secondary_button_color }} !important; color: {{ section.settings.secondary_button_color }} !important;{% endif %}
+    border-color: {{ section.settings.secondary_button_color | default: '#FFFFFF' }} !important;
+    color: {{ section.settings.secondary_button_color | default: '#FFFFFF' }} !important;
   }
 {%- endstyle -%}
 
@@ -97,6 +98,14 @@
           {{ section.settings.secondary_btn_text | escape }}
         </a>
       {%- endif -%}
+
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'cta_button' and block.settings.label != blank -%}
+          <a href="{{ block.settings.link | default: routes.root_url }}" class="btn-tactile {% if block.settings.style == 'outline' %}btn-outline{% else %}btn-primary{% endif %}" {% if block.settings.open_new_tab %}target="_blank" rel="noopener"{% endif %} {{ block.shopify_attributes }}>
+            {{ block.settings.label | escape }}
+          </a>
+        {%- endif -%}
+      {%- endfor -%}
     </div>
 
     <!-- Reusable Reassurance Badges -->
@@ -280,7 +289,8 @@
     {
       "type": "color",
       "id": "secondary_button_color",
-      "label": "Secondary button border and text"
+      "label": "Secondary button border and text",
+      "default": "#FFFFFF"
     },
     {
       "type": "header",
@@ -318,6 +328,39 @@
     }
   ],
   "blocks": [
+    {
+      "type": "cta_button",
+      "name": "Extra hero button",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Button label",
+          "default": "Shop now"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Button link"
+        },
+        {
+          "type": "select",
+          "id": "style",
+          "label": "Button style",
+          "options": [
+            { "value": "primary", "label": "Primary" },
+            { "value": "outline", "label": "Outline" }
+          ],
+          "default": "primary"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_new_tab",
+          "label": "Open link in new tab",
+          "default": false
+        }
+      ]
+    },
     {
       "type": "badge",
       "name": "Reassurance Badge",

@@ -1,0 +1,36 @@
+<section class="section" style="max-width: var(--content-max-width, 1200px); margin: 0 auto; padding: 40px 20px;">
+  <h1 class="section-title">{{ section.settings.heading | escape }}</h1>
+  <form action="{{ routes.search_url }}" method="get" role="search" style="display:flex; gap:10px; margin:20px 0 32px;">
+    <input class="footer-input" type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ section.settings.placeholder | escape }}" aria-label="Search">
+    <button class="btn-tactile btn-primary" type="submit">{{ section.settings.button_label | escape }}</button>
+  </form>
+
+  {%- if search.performed -%}
+    <p style="margin-bottom:20px; color:var(--color-text-muted);">{{ search.results_count }} results for “{{ search.terms | escape }}”</p>
+    <div class="product-grid-2col">
+      {%- for item in search.results -%}
+        <article class="product-card">
+          {%- if item.featured_image -%}<a href="{{ item.url }}"><img src="{{ item.featured_image | image_url: width: 600 }}" alt="{{ item.title | escape }}" loading="lazy" width="400" height="400"></a>{%- endif -%}
+          <div class="card-content">
+            <h2 class="card-title"><a href="{{ item.url }}">{{ item.title | escape }}</a></h2>
+            {%- if item.object_type == 'product' -%}<div class="card-price">{{ item.price | money }}</div>{%- endif -%}
+            {%- if item.content != blank -%}<p style="color:var(--color-text-muted); font-size:.9rem;">{{ item.content | strip_html | truncate: 120 }}</p>{%- endif -%}
+          </div>
+        </article>
+      {%- else -%}
+        <p>No results found. Try another search term.</p>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Search results",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Search" },
+    { "type": "text", "id": "placeholder", "label": "Search placeholder", "default": "Search products, pages and articles" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Search" }
+  ]
+}
+{% endschema %}

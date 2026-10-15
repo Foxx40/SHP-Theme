@@ -126,7 +126,7 @@
             "badge": "Christmas Must-Have",
             "badge_type": "christmas",
             "image_filename": "product-orb-lamp.jpg",
-            "product_url": "products/levitating-galaxy-orb.html",
+            "product_url": "",
             "reviews_count": 248
           }
         },
@@ -139,7 +139,7 @@
             "badge": "Aesthetic Hit",
             "badge_type": "trending",
             "image_filename": "product-pixel-clock.jpg",
-            "product_url": "products/levitating-galaxy-orb.html",
+            "product_url": "",
             "reviews_count": 189
           }
         },
@@ -152,7 +152,7 @@
             "badge": "Boredom Buster",
             "badge_type": "christmas",
             "image_filename": "product-pocket-console.jpg",
-            "product_url": "products/levitating-galaxy-orb.html",
+            "product_url": "",
             "reviews_count": 312
           }
         },
@@ -165,7 +165,7 @@
             "badge": "Under $30 Hit",
             "badge_type": "trending",
             "image_filename": "product-sound-bars.jpg",
-            "product_url": "products/levitating-galaxy-orb.html",
+            "product_url": "",
             "reviews_count": 145
           }
         }
@@ -241,7 +241,7 @@
             "is_highlight": true,
             "title": "Express Worldwide Delivery",
             "sub": "Guaranteed by Dec 22 or full refund",
-            "link": "pages/shipping-duties.html"
+            "link": ""
           }
         },
         "trust_2": {
@@ -251,7 +251,7 @@
             "is_highlight": false,
             "title": "Pre-Paid Customs (DDP)",
             "sub": "Zero surprise fees at your doorstep",
-            "link": "pages/shipping-duties.html"
+            "link": ""
           }
         },
         "trust_3": {
@@ -261,7 +261,7 @@
             "is_highlight": false,
             "title": "Holiday Returns Thru Jan 31",
             "sub": "60-day stress-free exchanges",
-            "link": "pages/returns.html"
+            "link": ""
           }
         },
         "trust_4": {
