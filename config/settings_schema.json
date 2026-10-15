@@ -44,6 +44,92 @@
         "label": "Text & Headings (Deep Navy Grey)",
         "default": "#1E293B",
         "info": "Body text and crisp headings"
+      },
+      {
+        "type": "range",
+        "id": "content_max_width",
+        "label": "Maximum content width",
+        "min": 960,
+        "max": 1600,
+        "step": 20,
+        "unit": "px",
+        "default": 1200
+      },
+      {
+        "type": "range",
+        "id": "radius_small",
+        "label": "Small corner radius",
+        "min": 0,
+        "max": 24,
+        "step": 2,
+        "unit": "px",
+        "default": 8
+      },
+      {
+        "type": "range",
+        "id": "radius_medium",
+        "label": "Medium corner radius",
+        "min": 0,
+        "max": 32,
+        "step": 2,
+        "unit": "px",
+        "default": 14
+      },
+      {
+        "type": "range",
+        "id": "radius_large",
+        "label": "Large corner radius",
+        "min": 0,
+        "max": 40,
+        "step": 2,
+        "unit": "px",
+        "default": 20
+      }
+    ]
+  },
+  {
+    "name": "Buttons",
+    "settings": [
+      {
+        "type": "select",
+        "id": "button_shape",
+        "label": "Button shape",
+        "options": [
+          { "value": "pill", "label": "Pill" },
+          { "value": "rounded", "label": "Rounded" },
+          { "value": "square", "label": "Slightly rounded" }
+        ],
+        "default": "pill"
+      },
+      {
+        "type": "range",
+        "id": "button_primary_vertical_padding",
+        "label": "Primary button height",
+        "min": 8,
+        "max": 24,
+        "step": 1,
+        "unit": "px",
+        "default": 14
+      },
+      {
+        "type": "range",
+        "id": "button_primary_horizontal_padding",
+        "label": "Primary button width padding",
+        "min": 12,
+        "max": 48,
+        "step": 2,
+        "unit": "px",
+        "default": 28
+      },
+      {
+        "type": "range",
+        "id": "button_font_size",
+        "label": "Button text size",
+        "min": 12,
+        "max": 22,
+        "step": 1,
+        "unit": "px",
+        "default": 16
       }
     ]
   },

@@ -33,6 +33,24 @@
     <!-- Theme Stylesheet -->
     {{ 'theme.css' | asset_url | stylesheet_tag }}
 
+    {%- style -%}
+      :root {
+        --color-primary: {{ settings.color_primary | default: '#9B1B30' }};
+        --color-secondary: {{ settings.color_secondary | default: '#2B4C5E' }};
+        --color-bg-canvas: {{ settings.color_canvas | default: '#F8F9FA' }};
+        --color-surface: {{ settings.color_surface | default: '#E9ECEF' }};
+        --color-text-main: {{ settings.color_text_main | default: '#1E293B' }};
+        --radius-sm: {{ settings.radius_small | default: 8 }}px;
+        --radius-md: {{ settings.radius_medium | default: 14 }}px;
+        --radius-lg: {{ settings.radius_large | default: 20 }}px;
+        --radius-pill: {% if settings.button_shape == 'square' %}{{ settings.radius_small | default: 8 }}px{% elsif settings.button_shape == 'rounded' %}{{ settings.radius_medium | default: 14 }}px{% else %}9999px{% endif %};
+        --button-primary-py: {{ settings.button_primary_vertical_padding | default: 14 }}px;
+        --button-primary-px: {{ settings.button_primary_horizontal_padding | default: 28 }}px;
+        --button-primary-font-size: {{ settings.button_font_size | default: 16 }}px;
+        --content-max-width: {{ settings.content_max_width | default: 1200 }}px;
+      }
+    {%- endstyle -%}
+
     {{ content_for_header }}
   </head>
 

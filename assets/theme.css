@@ -134,9 +134,13 @@ button {
 .btn-primary {
   background: var(--color-primary);
   color: #FFFFFF;
-  padding: 14px 28px;
-  font-size: 1.05rem;
+  padding: var(--button-primary-py, 14px) var(--button-primary-px, 28px);
+  font-size: var(--button-primary-font-size, 1.05rem);
   box-shadow: var(--shadow-glow-primary);
+}
+
+.hero-cta-group .btn-tactile {
+  min-height: var(--hero-button-height, auto);
 }
 
 .btn-primary:hover {
@@ -288,7 +292,7 @@ button {
   justify-content: center;
   gap: 8px;
   text-align: center;
-  max-width: 1200px;
+  max-width: var(--content-max-width, 1200px);
   margin: 0 auto;
 }
 
@@ -339,7 +343,7 @@ button {
 
 .header-container {
   width: 100%;
-  max-width: 1200px;
+  max-width: var(--content-max-width, 1200px);
   margin: 0 auto;
   padding: 0 16px;
   display: flex;
@@ -2062,7 +2066,7 @@ button {
     grid-template-columns: 1.1fr 1fr;
     gap: 36px;
     align-items: start;
-    max-width: 1200px;
+    max-width: var(--content-max-width, 1200px);
     margin: 30px auto;
     padding: 0 20px;
   }
