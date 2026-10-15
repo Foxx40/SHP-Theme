@@ -1,0 +1,80 @@
+{
+  "sections": {
+    "main_shipping": {
+      "type": "main-shipping-duties",
+      "blocks": {
+        "us_tier": {
+          "type": "shipping_tier",
+          "settings": {
+            "country": "🇺🇸 United States",
+            "courier": "USPS Priority / FedEx Express",
+            "speed": "3 – 5 Business Days",
+            "cutoff": "December 18, 11:59 PM EST"
+          }
+        },
+        "uk_tier": {
+          "type": "shipping_tier",
+          "settings": {
+            "country": "🇬🇧 United Kingdom",
+            "courier": "Royal Mail Tracked 24 / DHL",
+            "speed": "4 – 6 Business Days",
+            "cutoff": "December 16, 11:59 PM GMT"
+          }
+        },
+        "eu_tier": {
+          "type": "shipping_tier",
+          "settings": {
+            "country": "🇪🇺 European Union",
+            "courier": "DHL Express / DPD Local",
+            "speed": "4 – 7 Business Days",
+            "cutoff": "December 15, 11:59 PM CET"
+          }
+        },
+        "ca_tier": {
+          "type": "shipping_tier",
+          "settings": {
+            "country": "🇨🇦 Canada",
+            "courier": "Canada Post Expedited / FedEx",
+            "speed": "4 – 6 Business Days",
+            "cutoff": "December 16, 11:59 PM EST"
+          }
+        },
+        "au_tier": {
+          "type": "shipping_tier",
+          "settings": {
+            "country": "🇦🇺 Australia & NZ",
+            "courier": "Australia Post Express / StarTrack",
+            "speed": "5 – 8 Business Days",
+            "cutoff": "December 14, 11:59 PM AEST"
+          }
+        }
+      },
+      "block_order": [
+        "us_tier",
+        "uk_tier",
+        "eu_tier",
+        "ca_tier",
+        "au_tier"
+      ],
+      "settings": {
+        "badge_emoji": "🌍",
+        "heading": "International Shipping & Duties (DDP)",
+        "subheading": "Guaranteed Christmas Delivery with Zero Surprise Customs Fees at Your Door.",
+        "guarantee_pill_text": "🎄 2026 Holiday Guarantee: Order by Dec 15 for arrival before Christmas Eve",
+        "ddp_heading": "What Does \"Customs & Duties Pre-Paid (DDP)\" Mean?",
+        "ddp_body": "<p>Unlike ordinary dropshipping stores where international customers get hit with unexpected 20–30% VAT bills and courier clearance admin fees upon delivery, <strong>FROSTBYTE operates 100% on a Delivered Duty Paid (DDP) basis</strong>.</p>",
+        "guarantee_box_text": "All local import duties, VAT/GST, and customs brokerage fees are calculated and completely covered at checkout. You and the gift recipient will never be asked to pay another cent when the carrier rings the doorbell.",
+        "table_heading": "Holiday Delivery Timelines & Cutoff Dates",
+        "insurance_heading": "Tracking & Package Insurance",
+        "insurance_body": "Every single holiday parcel is dispatched with an international tracking number and full door-to-door transit insurance. If a parcel is delayed past Dec 24, we will immediately refund your shipping cost and issue a $25 store credit voucher.",
+        "show_track_button": true,
+        "track_button_text": "Track an Existing Order",
+        "padding_top": 36,
+        "padding_bottom": 48
+      }
+    }
+  },
+  "order": [
+    "main_shipping"
+  ]
+}

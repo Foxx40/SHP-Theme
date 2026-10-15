@@ -3,7 +3,7 @@
   <div class="cart-drawer-header">
     <div class="cart-drawer-title">
       <span>🛍️</span>
-      <span>YOUR GADGET BAG</span>
+      <span>{{ section.settings.header_title | default: 'YOUR GADGET BAG' }}</span>
     </div>
     <button type="button" class="drawer-close-btn" data-drawer-close="cart" aria-label="Close cart">
       ✕
@@ -13,7 +13,7 @@
   <!-- Free Shipping Progress Bar -->
   <div class="cart-free-shipping-strip">
     <div class="free-shipping-label" id="FreeShippingText">
-      Add <strong>$10.01</strong> more for <strong>Free Worldwide Express Shipping!</strong>
+      Add <strong>$10.01</strong> {{ section.settings.free_shipping_text | default: 'more for Free Worldwide Express Shipping!' }}
     </div>
     <div class="progress-bar-track">
       <div class="progress-bar-fill" id="FreeShippingProgressBar" style="width: 83%;"></div>
@@ -25,14 +25,52 @@
     <!-- Populated by theme.js -->
   </div>
 
+  <!-- In-Drawer Quick Upsell Stocking Stuffers (Blocks) -->
+  {%- if section.blocks.size > 0 -%}
+    <div class="cart-quick-upsells" style="padding: 12px 16px; border-top: 1px dashed var(--color-border); background: rgba(43, 76, 94, 0.03);">
+      <div style="font-size: 0.78rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-secondary); margin-bottom: 8px;">
+        ⚡ Instant Stocking Stuffer Add-ons
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'quick_upsell' -%}
+            <div class="drawer-upsell-item" {{ block.shopify_attributes }} style="display: flex; align-items: center; justify-content: space-between; background: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-sm); padding: 8px 10px;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                {%- if block.settings.image != blank -%}
+                  <img src="{{ block.settings.image | image_url: width: 80 }}" alt="{{ block.settings.title | escape }}" style="width: 36px; height: 36px; object-fit: cover; border-radius: 4px;">
+                {%- else -%}
+                  <span style="font-size: 1.3rem;">{{ block.settings.emoji | default: '✨' }}</span>
+                {%- endif -%}
+                <div>
+                  <div style="font-size: 0.82rem; font-weight: 800; color: var(--color-text-main);">{{ block.settings.title }}</div>
+                  <div style="font-size: 0.76rem; font-weight: 700; color: var(--color-primary);">+${{ block.settings.price | default: '9.99' }}</div>
+                </div>
+              </div>
+              <button 
+                type="button" 
+                class="btn-tactile btn-secondary" 
+                style="padding: 4px 10px; font-size: 0.75rem;"
+                onclick="window.FROSTBYTE.cart.addItem({ id: 'upsell-{{ block.id }}', title: '{{ block.settings.title | escape }}', price: {{ block.settings.price | default: 9.99 }}, image: '{{ block.settings.image | image_url: width: 100 }}' });"
+              >
+                + Add
+              </button>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+
   <!-- Christmas Gift Box & Holiday Card Add-on Checkbox -->
-  <div class="cart-upsell-box">
-    <input type="checkbox" id="GiftBoxUpsellCheckbox" class="upsell-checkbox-input">
-    <label for="GiftBoxUpsellCheckbox" class="upsell-info" style="cursor: pointer;">
-      <span class="upsell-title">🎁 Add Holiday Gift Box &amp; Teen Card (+<span data-price-usd="3.99">$3.99</span>)</span>
-      <span class="upsell-sub">Premium frosted silver wrapping with personalized holiday message</span>
-    </label>
-  </div>
+  {%- if section.settings.enable_gift_upsell -%}
+    <div class="cart-upsell-box">
+      <input type="checkbox" id="GiftBoxUpsellCheckbox" class="upsell-checkbox-input">
+      <label for="GiftBoxUpsellCheckbox" class="upsell-info" style="cursor: pointer;">
+        <span class="upsell-title">{{ section.settings.gift_upsell_title | default: '🎁 Add Holiday Gift Box & Teen Card' }} (+<span data-price-usd="{{ section.settings.gift_upsell_price | default: '3.99' }}">${{ section.settings.gift_upsell_price | default: '3.99' }}</span>)</span>
+        <span class="upsell-sub">{{ section.settings.gift_upsell_sub | default: 'Premium frosted silver wrapping with personalized holiday message' }}</span>
+      </label>
+    </div>
+  {%- endif -%}
 
   <!-- Footer & Checkout Actions -->
   <div class="cart-drawer-footer">
@@ -41,32 +79,42 @@
       <span class="cart-subtotal-val" id="CartSubtotalValue">$49.99</span>
     </div>
 
-    <div class="cart-duties-included-note">
-      🛡️ <strong>Delivered Duty Paid (DDP):</strong> Taxes and international customs are pre-paid. No surprise courier bills.
-    </div>
+    {%- if section.settings.ddp_notice != blank -%}
+      <div class="cart-duties-included-note">
+        {{ section.settings.ddp_notice }}
+      </div>
+    {%- endif -%}
 
     <!-- Direct Express Checkout Buttons -->
     <div class="express-checkout-grid">
       <button type="button" class="btn-tactile btn-primary" onclick="alert('Proceeding to Christmas Priority Checkout...');">
-        🔒 Standard Secure Checkout
+        {{ section.settings.checkout_btn_text | default: '🔒 Standard Secure Checkout' }}
       </button>
 
-      <div style="display: flex; gap: 8px;">
-        <button type="button" class="btn-tactile btn-express-apple" style="flex: 1;" onclick="alert('Launching Apple Pay...');">
-          <svg width="16" height="16" viewBox="0 0 170 170" fill="currentColor">
-            <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.16-1.9-14.42-6.08-3.69-3.04-7.69-7.85-12-14.43-6.42-9.78-11.45-20.73-15.09-32.86-3.64-12.12-5.46-23.77-5.46-34.94 0-16.19 4.38-29.6 13.14-40.23 8.76-10.63 19.46-16.14 32.1-16.54 4.58 0 9.87 1.25 15.87 3.75 6 2.5 9.94 3.86 11.83 4.09 1.52-.23 5.48-1.59 11.87-4.09 6.39-2.5 11.53-3.69 15.42-3.56 11.96.65 21.6 5.25 28.91 13.8-10.43 6.31-15.54 15.11-15.33 26.4.21 8.8 3.58 16.1 10.11 21.9 6.53 5.8 14.12 9.07 22.77 9.81-2.4 7.29-5.49 14.54-9.27 21.76zM119.22 33.15c0-7.39 2.68-14.39 8.04-21 5.36-6.61 11.96-10.74 19.8-12.4 1.09 6.96-.33 13.75-4.26 20.37-3.93 6.62-9.61 11.13-17.04 13.53-.76-.17-1.95-.27-3.57-.3-1.63-.03-2.62-.09-2.97-.2z"/>
-          </svg>
-          <span>Pay</span>
-        </button>
+      {%- if section.settings.enable_express_apple or section.settings.enable_express_shoppay or section.settings.enable_express_paypal -%}
+        <div style="display: flex; gap: 8px;">
+          {%- if section.settings.enable_express_apple -%}
+            <button type="button" class="btn-tactile btn-express-apple" style="flex: 1;" onclick="alert('Launching Apple Pay...');">
+              <svg width="16" height="16" viewBox="0 0 170 170" fill="currentColor">
+                <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.16-1.9-14.42-6.08-3.69-3.04-7.69-7.85-12-14.43-6.42-9.78-11.45-20.73-15.09-32.86-3.64-12.12-5.46-23.77-5.46-34.94 0-16.19 4.38-29.6 13.14-40.23 8.76-10.63 19.46-16.14 32.1-16.54 4.58 0 9.87 1.25 15.87 3.75 6 2.5 9.94 3.86 11.83 4.09 1.52-.23 5.48-1.59 11.87-4.09 6.39-2.5 11.53-3.69 15.42-3.56 11.96.65 21.6 5.25 28.91 13.8-10.43 6.31-15.54 15.11-15.33 26.4.21 8.8 3.58 16.1 10.11 21.9 6.53 5.8 14.12 9.07 22.77 9.81-2.4 7.29-5.49 14.54-9.27 21.76zM119.22 33.15c0-7.39 2.68-14.39 8.04-21 5.36-6.61 11.96-10.74 19.8-12.4 1.09 6.96-.33 13.75-4.26 20.37-3.93 6.62-9.61 11.13-17.04 13.53-.76-.17-1.95-.27-3.57-.3-1.63-.03-2.62-.09-2.97-.2z"/>
+              </svg>
+              <span>Pay</span>
+            </button>
+          {%- endif -%}
 
-        <button type="button" class="btn-tactile btn-express-shoppay" style="flex: 1;" onclick="alert('Launching Shop Pay...');">
-          <span>Shop Pay</span>
-        </button>
+          {%- if section.settings.enable_express_shoppay -%}
+            <button type="button" class="btn-tactile btn-express-shoppay" style="flex: 1;" onclick="alert('Launching Shop Pay...');">
+              <span>Shop Pay</span>
+            </button>
+          {%- endif -%}
 
-        <button type="button" class="btn-tactile btn-express-paypal" style="flex: 1;" onclick="alert('Launching PayPal...');">
-          <span>PayPal</span>
-        </button>
-      </div>
+          {%- if section.settings.enable_express_paypal -%}
+            <button type="button" class="btn-tactile btn-express-paypal" style="flex: 1;" onclick="alert('Launching PayPal...');">
+              <span>PayPal</span>
+            </button>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
     </div>
   </div>
 </div>
@@ -74,6 +122,130 @@
 {% schema %}
 {
   "name": "Cart Drawer",
-  "settings": []
+  "settings": [
+    {
+      "type": "header",
+      "content": "Drawer Header"
+    },
+    {
+      "type": "text",
+      "id": "header_title",
+      "label": "Cart Title",
+      "default": "YOUR GADGET BAG"
+    },
+    {
+      "type": "header",
+      "content": "Free Shipping Progress"
+    },
+    {
+      "type": "range",
+      "id": "free_shipping_threshold",
+      "min": 20,
+      "max": 150,
+      "step": 5,
+      "unit": "$",
+      "label": "Free Shipping Threshold (USD)",
+      "default": 60
+    },
+    {
+      "type": "text",
+      "id": "free_shipping_text",
+      "label": "Free Shipping Goal Text",
+      "default": "more for Free Worldwide Express Shipping!"
+    },
+    {
+      "type": "header",
+      "content": "Holiday Gift Box Upsell"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_gift_upsell",
+      "label": "Enable Gift Box Upsell Checkbox",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "gift_upsell_title",
+      "label": "Gift Upsell Title",
+      "default": "🎁 Add Holiday Gift Box & Teen Card"
+    },
+    {
+      "type": "text",
+      "id": "gift_upsell_price",
+      "label": "Gift Upsell Price",
+      "default": "3.99"
+    },
+    {
+      "type": "text",
+      "id": "gift_upsell_sub",
+      "label": "Gift Upsell Subtext",
+      "default": "Premium frosted silver wrapping with personalized holiday message"
+    },
+    {
+      "type": "header",
+      "content": "Checkout & Guarantees"
+    },
+    {
+      "type": "richtext",
+      "id": "ddp_notice",
+      "label": "DDP Notice Text",
+      "default": "<p>🛡️ <strong>Delivered Duty Paid (DDP):</strong> Taxes and international customs are pre-paid. No surprise courier bills.</p>"
+    },
+    {
+      "type": "text",
+      "id": "checkout_btn_text",
+      "label": "Standard Checkout Button Text",
+      "default": "🔒 Standard Secure Checkout"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_express_apple",
+      "label": "Show Apple Pay Button",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_express_shoppay",
+      "label": "Show Shop Pay Button",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_express_paypal",
+      "label": "Show PayPal Button",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "quick_upsell",
+      "name": "Quick Add Stocking Stuffer",
+      "settings": [
+        {
+          "type": "text",
+          "id": "emoji",
+          "label": "Emoji Icon",
+          "default": "⚡"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Product Thumbnail"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Item Title",
+          "default": "Braided Fast-Charging USB-C Cable (6ft)"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Price",
+          "default": "9.99"
+        }
+      ]
+    }
+  ]
 }
 {% endschema %}

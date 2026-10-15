@@ -1,0 +1,62 @@
+{
+  "sections": {
+    "main_track_order": {
+      "type": "main-track-order",
+      "blocks": {
+        "step_1": {
+          "type": "timeline_step",
+          "settings": {
+            "title": "Package Dispatched via International Priority Air",
+            "detail": "Customs Documentation cleared (DDP Pre-Paid)",
+            "is_completed": true
+          }
+        },
+        "step_2": {
+          "type": "timeline_step",
+          "settings": {
+            "title": "Arrived at Regional Distribution Hub",
+            "detail": "Processed through sort facility",
+            "is_completed": true
+          }
+        },
+        "step_3": {
+          "type": "timeline_step",
+          "settings": {
+            "title": "Out for Local Doorstep Delivery",
+            "detail": "Assigned to delivery route",
+            "is_completed": false
+          }
+        },
+        "step_4": {
+          "type": "timeline_step",
+          "settings": {
+            "title": "Delivered to Recipient",
+            "detail": "Ready to wrap for Christmas Day!",
+            "is_completed": false
+          }
+        }
+      },
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3",
+        "step_4"
+      ],
+      "settings": {
+        "badge_emoji": "📦",
+        "heading": "Track Your Christmas Order",
+        "subheading": "Real-time international milestone tracking for parents and holiday shoppers.",
+        "order_number_label": "Order Number (e.g., FB-88492)",
+        "email_label": "Email or Phone Used at Checkout",
+        "button_label": "Track Order Status",
+        "status_badge": "In Transit – On Schedule",
+        "estimated_delivery": "December 21, 2026 (Guaranteed by Christmas)",
+        "padding_top": 36,
+        "padding_bottom": 48
+      }
+    }
+  },
+  "order": [
+    "main_track_order"
+  ]
+}

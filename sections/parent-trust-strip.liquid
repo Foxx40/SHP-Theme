@@ -1,3 +1,13 @@
+{%- style -%}
+  #trust-strip-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top | default: 18 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | default: 18 }}px;
+    {%- if section.settings.custom_bg_color != blank -%}
+      background-color: {{ section.settings.custom_bg_color }};
+    {%- endif -%}
+  }
+{%- endstyle -%}
+
 <section class="parent-trust-section" id="trust-strip-{{ section.id }}" aria-label="{{ section.settings.section_label | default: 'Parent Reassurance & Trust Pillars' }}">
   <div class="trust-scroller">
     {%- if section.blocks.size > 0 -%}
@@ -54,7 +64,6 @@
         {%- endcase -%}
       {%- endfor -%}
     {%- else -%}
-      <!-- Default Demonstration Pillars -->
       <div class="trust-item reveal-on-scroll">
         <div class="trust-icon-box highlight">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
@@ -115,12 +124,46 @@
 {% schema %}
 {
   "name": "Parent Trust Strip",
+  "tag": "section",
+  "class": "section section-trust-strip",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
   "settings": [
     {
       "type": "text",
       "id": "section_label",
       "label": "Accessibility Label",
       "default": "Parent Reassurance & Trust Pillars"
+    },
+    {
+      "type": "header",
+      "content": "Section Spacing & Colors"
+    },
+    {
+      "type": "color",
+      "id": "custom_bg_color",
+      "label": "Custom Background Color"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 16
     }
   ],
   "blocks": [

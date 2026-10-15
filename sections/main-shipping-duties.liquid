@@ -1,0 +1,348 @@
+{%- style -%}
+  #Section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top | default: 36 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | default: 48 }}px;
+    {% if section.settings.custom_bg_color != blank %}
+      background-color: {{ section.settings.custom_bg_color }};
+    {% endif %}
+  }
+  #Section-{{ section.id }} .page-hero-title {
+    {% if section.settings.custom_text_color != blank %}
+      color: {{ section.settings.custom_text_color }};
+    {% endif %}
+  }
+{%- endstyle -%}
+
+<article class="page-shipping-duties" id="Section-{{ section.id }}">
+  <header class="page-hero">
+    {%- if section.settings.badge_emoji != blank -%}
+      <div style="font-size: 2.2rem; margin-bottom: 8px;">{{ section.settings.badge_emoji }}</div>
+    {%- endif -%}
+    <h1 class="page-hero-title">{{ section.settings.heading | default: 'International Shipping & Duties (DDP)' | escape }}</h1>
+    {%- if section.settings.subheading != blank -%}
+      <p class="page-hero-sub">{{ section.settings.subheading | escape }}</p>
+    {%- endif -%}
+  </header>
+
+  <div class="page-content-wrapper">
+    {%- if section.settings.guarantee_pill_text != blank -%}
+      <div class="pdp-delivery-badge-pill" style="margin-bottom: 20px;">
+        <span>{{ section.settings.guarantee_pill_text }}</span>
+      </div>
+    {%- endif -%}
+
+    <section class="reveal-on-scroll">
+      <h2 style="font-size: 1.3rem; font-weight: 800; color: var(--color-text-main); margin-bottom: 8px;">
+        {{ section.settings.ddp_heading | default: 'What Does "Customs & Duties Pre-Paid (DDP)" Mean?' }}
+      </h2>
+      <div class="rte" style="color: var(--color-text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+        {{ section.settings.ddp_body }}
+      </div>
+      <div style="background: var(--color-surface); border-left: 4px solid var(--color-success); padding: 14px 16px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin-bottom: 28px;">
+        <strong style="color: var(--color-text-main);">Our Guarantee:</strong> {{ section.settings.guarantee_box_text | default: 'All local import duties, VAT/GST, and customs brokerage fees are calculated and completely covered at checkout. You and the gift recipient will never be asked to pay another cent when the carrier rings the doorbell.' }}
+      </div>
+    </section>
+
+    <section class="reveal-on-scroll delay-1">
+      <h2 style="font-size: 1.3rem; font-weight: 800; color: var(--color-text-main); margin-bottom: 12px;">
+        {{ section.settings.table_heading | default: 'Holiday Delivery Timelines & Cutoff Dates' }}
+      </h2>
+      <div class="shipping-table-wrap">
+        <table class="shipping-table">
+          <thead>
+            <tr>
+              <th>Country / Region</th>
+              <th>Courier Partner</th>
+              <th>Delivery Speed</th>
+              <th>Dec 2026 Holiday Cutoff</th>
+            </tr>
+          </thead>
+          <tbody>
+            {%- if section.blocks.size > 0 -%}
+              {%- for block in section.blocks -%}
+                <tr {{ block.shopify_attributes }}>
+                  <td><strong>{{ block.settings.country }}</strong></td>
+                  <td>{{ block.settings.courier }}</td>
+                  <td>{{ block.settings.speed }}</td>
+                  <td><strong>{{ block.settings.cutoff }}</strong></td>
+                </tr>
+              {%- endfor -%}
+            {%- else -%}
+              <tr>
+                <td><strong>🇺🇸 United States</strong></td>
+                <td>USPS Priority / FedEx Express</td>
+                <td>3 &ndash; 5 Business Days</td>
+                <td><strong>December 18, 11:59 PM EST</strong></td>
+              </tr>
+              <tr>
+                <td><strong>🇬🇧 United Kingdom</strong></td>
+                <td>Royal Mail Tracked 24 / DHL</td>
+                <td>4 &ndash; 6 Business Days</td>
+                <td><strong>December 16, 11:59 PM GMT</strong></td>
+              </tr>
+              <tr>
+                <td><strong>🇪🇺 European Union</strong></td>
+                <td>DHL Express / DPD Local</td>
+                <td>4 &ndash; 7 Business Days</td>
+                <td><strong>December 15, 11:59 PM CET</strong></td>
+              </tr>
+              <tr>
+                <td><strong>🇨🇦 Canada</strong></td>
+                <td>Canada Post Expedited / FedEx</td>
+                <td>4 &ndash; 6 Business Days</td>
+                <td><strong>December 16, 11:59 PM EST</strong></td>
+              </tr>
+              <tr>
+                <td><strong>🇦🇺 Australia &amp; NZ</strong></td>
+                <td>Australia Post Express / StarTrack</td>
+                <td>5 &ndash; 8 Business Days</td>
+                <td><strong>December 14, 11:59 PM AEST</strong></td>
+              </tr>
+            {%- endif -%}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="reveal-on-scroll delay-2" style="margin-top: 32px;">
+      <h2 style="font-size: 1.3rem; font-weight: 800; color: var(--color-text-main); margin-bottom: 12px;">
+        {{ section.settings.insurance_heading | default: 'Tracking & Package Insurance' }}
+      </h2>
+      <p style="color: var(--color-text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px;">
+        {{ section.settings.insurance_body | default: 'Every single holiday parcel is dispatched with an international tracking number and full door-to-door transit insurance. If a parcel is delayed past Dec 24, we will immediately refund your shipping cost and issue a $25 store credit voucher.' }}
+      </p>
+      {%- if section.settings.show_track_button -%}
+        <div style="text-align: center; margin-top: 24px;">
+          <a href="{{ section.settings.track_button_link | default: 'track-order.html' }}" class="btn-tactile btn-primary">
+            <span>{{ section.settings.track_button_text | default: 'Track an Existing Order' }}</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </a>
+        </div>
+      {%- endif -%}
+    </section>
+  </div>
+</article>
+
+{% schema %}
+{
+  "name": "Shipping & Customs DDP",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Page Header"
+    },
+    {
+      "type": "text",
+      "id": "badge_emoji",
+      "label": "Header Emoji Icon",
+      "default": "🌍"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "International Shipping & Duties (DDP)"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Guaranteed Christmas Delivery with Zero Surprise Customs Fees at Your Door."
+    },
+    {
+      "type": "text",
+      "id": "guarantee_pill_text",
+      "label": "Guarantee Banner Pill Text",
+      "default": "🎄 2026 Holiday Guarantee: Order by Dec 15 for arrival before Christmas Eve"
+    },
+    {
+      "type": "header",
+      "content": "DDP Explanation"
+    },
+    {
+      "type": "text",
+      "id": "ddp_heading",
+      "label": "DDP Section Title",
+      "default": "What Does \"Customs & Duties Pre-Paid (DDP)\" Mean?"
+    },
+    {
+      "type": "richtext",
+      "id": "ddp_body",
+      "label": "DDP Section Text",
+      "default": "<p>Unlike ordinary dropshipping stores where international customers get hit with unexpected 20–30% VAT bills and courier clearance admin fees upon delivery, <strong>FROSTBYTE operates 100% on a Delivered Duty Paid (DDP) basis</strong>.</p>"
+    },
+    {
+      "type": "textarea",
+      "id": "guarantee_box_text",
+      "label": "Guarantee Callout Box Text",
+      "default": "All local import duties, VAT/GST, and customs brokerage fees are calculated and completely covered at checkout. You and the gift recipient will never be asked to pay another cent when the carrier rings the doorbell."
+    },
+    {
+      "type": "header",
+      "content": "Timelines Table"
+    },
+    {
+      "type": "text",
+      "id": "table_heading",
+      "label": "Table Heading",
+      "default": "Holiday Delivery Timelines & Cutoff Dates"
+    },
+    {
+      "type": "header",
+      "content": "Insurance & Tracking"
+    },
+    {
+      "type": "text",
+      "id": "insurance_heading",
+      "label": "Insurance Section Heading",
+      "default": "Tracking & Package Insurance"
+    },
+    {
+      "type": "textarea",
+      "id": "insurance_body",
+      "label": "Insurance Section Body",
+      "default": "Every single holiday parcel is dispatched with an international tracking number and full door-to-door transit insurance. If a parcel is delayed past Dec 24, we will immediately refund your shipping cost and issue a $25 store credit voucher."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_track_button",
+      "label": "Show Tracking CTA Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "track_button_text",
+      "label": "Button Label",
+      "default": "Track an Existing Order"
+    },
+    {
+      "type": "url",
+      "id": "track_button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "header",
+      "content": "Section Spacing & Colors"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 48
+    },
+    {
+      "type": "color",
+      "id": "custom_bg_color",
+      "label": "Custom Background Color"
+    },
+    {
+      "type": "color",
+      "id": "custom_text_color",
+      "label": "Custom Heading Color"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "shipping_tier",
+      "name": "Country Row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "country",
+          "label": "Country / Region",
+          "default": "🇺🇸 United States"
+        },
+        {
+          "type": "text",
+          "id": "courier",
+          "label": "Courier Partner",
+          "default": "USPS Priority / FedEx Express"
+        },
+        {
+          "type": "text",
+          "id": "speed",
+          "label": "Delivery Speed",
+          "default": "3 – 5 Business Days"
+        },
+        {
+          "type": "text",
+          "id": "cutoff",
+          "label": "Holiday Cutoff Date",
+          "default": "December 18, 11:59 PM EST"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shipping & Duties",
+      "blocks": [
+        {
+          "type": "shipping_tier",
+          "settings": {
+            "country": "🇺🇸 United States",
+            "courier": "USPS Priority / FedEx Express",
+            "speed": "3 – 5 Business Days",
+            "cutoff": "December 18, 11:59 PM EST"
+          }
+        },
+        {
+          "type": "shipping_tier",
+          "settings": {
+            "country": "🇬🇧 United Kingdom",
+            "courier": "Royal Mail Tracked 24 / DHL",
+            "speed": "4 – 6 Business Days",
+            "cutoff": "December 16, 11:59 PM GMT"
+          }
+        },
+        {
+          "type": "shipping_tier",
+          "settings": {
+            "country": "🇪🇺 European Union",
+            "courier": "DHL Express / DPD Local",
+            "speed": "4 – 7 Business Days",
+            "cutoff": "December 15, 11:59 PM CET"
+          }
+        },
+        {
+          "type": "shipping_tier",
+          "settings": {
+            "country": "🇨🇦 Canada",
+            "courier": "Canada Post Expedited / FedEx",
+            "speed": "4 – 6 Business Days",
+            "cutoff": "December 16, 11:59 PM EST"
+          }
+        },
+        {
+          "type": "shipping_tier",
+          "settings": {
+            "country": "🇦🇺 Australia & NZ",
+            "courier": "Australia Post Express / StarTrack",
+            "speed": "5 – 8 Business Days",
+            "cutoff": "December 14, 11:59 PM AEST"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

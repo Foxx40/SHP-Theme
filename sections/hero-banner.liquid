@@ -1,9 +1,31 @@
-<section class="hero-section" id="hero-{{ section.id }}">
+{%- style -%}
+  #Hero-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top | default: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | default: 0 }}px;
+  }
+  {%- if section.settings.custom_bg_color != blank -%}
+    #Hero-{{ section.id }} {
+      background-color: {{ section.settings.custom_bg_color }};
+    }
+  {%- endif -%}
+  {%- if section.settings.custom_text_color != blank -%}
+    #Hero-{{ section.id }} .hero-content,
+    #Hero-{{ section.id }} .hero-headline,
+    #Hero-{{ section.id }} .hero-subtext {
+      color: {{ section.settings.custom_text_color }};
+    }
+  {%- endif -%}
+  #Hero-{{ section.id }} .hero-parallax-bg {
+    filter: brightness({{ section.settings.image_brightness | divided_by: 100.0 }});
+  }
+{%- endstyle -%}
+
+<section class="hero-section" id="Hero-{{ section.id }}">
   <!-- 0.2x Speed Parallax Background Wrapper -->
   <div class="hero-parallax-wrapper">
     {%- assign hero_img_url = 'hero-winter-gadgets.jpg' | asset_url -%}
     {%- if section.settings.hero_image != blank -%}
-      {%- assign hero_img_url = section.settings.hero_image | image_url: width: 1800 -%}
+      {%- assign hero_img_url = section.settings.hero_image | image_url: width: 2400 -%}
     {%- endif -%}
 
     <img 
@@ -18,7 +40,9 @@
   </div>
 
   <!-- Gradient & Glow Overlay -->
-  <div class="hero-gradient-overlay"></div>
+  {%- if section.settings.show_gradient_overlay -%}
+    <div class="hero-gradient-overlay" style="opacity: {{ section.settings.gradient_opacity | divided_by: 100.0 }};"></div>
+  {%- endif -%}
 
   <!-- Floating Snowflake Parallax Canvas -->
   {%- if section.settings.show_snowflakes -%}
@@ -27,8 +51,8 @@
     </div>
   {%- endif -%}
 
-  <!-- Hero Content -->
-  <div class="hero-content">
+  <!-- Hero Content Container -->
+  <div class="hero-content" style="text-align: {{ section.settings.content_alignment | default: 'center' }};">
     {%- if section.settings.urgency_tag != blank -%}
       <div class="hero-urgency-pill reveal-on-scroll">
         <span class="hero-urgency-dot"></span>
@@ -36,14 +60,14 @@
       </div>
     {%- endif -%}
 
-    <h1 class="hero-headline reveal-on-scroll delay-1">
+    <h1 class="hero-headline reveal-on-scroll delay-1 {{ section.settings.heading_size | default: 'h1' }}">
       {{ section.settings.headline | default: 'Trapped Indoors? Level Up Your Room & Beat Winter Boredom.' }}
     </h1>
 
     {%- if section.settings.subtext != blank -%}
-      <p class="hero-subtext reveal-on-scroll delay-2">
-        {{ section.settings.subtext | escape }}
-      </p>
+      <div class="hero-subtext reveal-on-scroll delay-2">
+        <p>{{ section.settings.subtext | escape }}</p>
+      </div>
     {%- endif -%}
 
     <!-- Call to Actions -->
@@ -94,17 +118,56 @@
 {% schema %}
 {
   "name": "Parallax Hero Banner",
+  "tag": "section",
+  "class": "section section-hero-banner",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
   "settings": [
+    {
+      "type": "header",
+      "content": "Hero Media & Visual Effects"
+    },
     {
       "type": "image_picker",
       "id": "hero_image",
       "label": "Hero Background Image"
     },
     {
+      "type": "range",
+      "id": "image_brightness",
+      "min": 40,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Background Image Brightness",
+      "default": 70
+    },
+    {
+      "type": "checkbox",
+      "id": "show_gradient_overlay",
+      "label": "Show Contrast Gradient Overlay",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "gradient_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Overlay Opacity",
+      "default": 85
+    },
+    {
       "type": "checkbox",
       "id": "show_snowflakes",
       "label": "Show Drifting Snowflake Parallax Canvas",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "Typography & Headings"
     },
     {
       "type": "text",
@@ -119,10 +182,36 @@
       "default": "Trapped Indoors? Level Up Your Room & Beat Winter Boredom."
     },
     {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Headline Size",
+      "options": [
+        { "value": "h2", "label": "Medium" },
+        { "value": "h1", "label": "Large" },
+        { "value": "h0", "label": "Extra Large" }
+      ],
+      "default": "h1"
+    },
+    {
       "type": "textarea",
       "id": "subtext",
       "label": "Hero Subtext",
       "default": "The coolest gadgets and room tech for your Christmas Wishlist. Order by Dec 15 for guaranteed arrival."
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "label": "Content Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Action Buttons"
     },
     {
       "type": "text",
@@ -145,6 +234,40 @@
       "type": "url",
       "id": "secondary_btn_link",
       "label": "Secondary Button Link"
+    },
+    {
+      "type": "header",
+      "content": "Section Spacing & Colors"
+    },
+    {
+      "type": "color",
+      "id": "custom_bg_color",
+      "label": "Custom Background Color"
+    },
+    {
+      "type": "color",
+      "id": "custom_text_color",
+      "label": "Custom Text Color"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 0
     }
   ],
   "blocks": [

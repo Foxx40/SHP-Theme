@@ -1,4 +1,20 @@
-<header class="site-header" role="banner">
+{%- style -%}
+  .header-custom-style {
+    {% if section.settings.custom_bg_color != blank %}
+      background: {{ section.settings.custom_bg_color }} !important;
+    {% endif %}
+    {% if section.settings.custom_text_color != blank %}
+      color: {{ section.settings.custom_text_color }} !important;
+    {% endif %}
+  }
+  .brand-logo img {
+    max-width: {{ section.settings.logo_width | default: 140 }}px;
+    height: auto;
+    display: block;
+  }
+{%- endstyle -%}
+
+<header class="site-header header-custom-style{% if section.settings.enable_sticky_header %} is-sticky{% endif %}" role="banner">
   <div class="header-container">
     <!-- Left: Hamburger Menu -->
     <div class="header-left">
@@ -14,8 +30,17 @@
     <!-- Center: Brand Logo -->
     <div class="header-center">
       <a href="{{ routes.root_url }}" class="brand-logo" aria-label="{{ shop.name }}">
-        <span class="logo-sparkle">❄️</span>
-        <span>FROST<span class="logo-highlight">BYTE</span></span>
+        {%- if section.settings.logo != blank -%}
+          <img 
+            src="{{ section.settings.logo | image_url: width: 300 }}" 
+            alt="{{ section.settings.logo.alt | default: shop.name | escape }}"
+            loading="eager"
+            width="{{ section.settings.logo_width | default: 140 }}"
+          >
+        {%- else -%}
+          <span class="logo-sparkle">❄️</span>
+          <span>{{ section.settings.logo_text | default: 'FROST' }}<span class="logo-highlight">{{ section.settings.logo_highlight | default: 'BYTE' }}</span></span>
+        {%- endif -%}
       </a>
     </div>
 
@@ -45,102 +70,144 @@
   <div class="drawer-header">
     <div class="drawer-title">
       <span>❄️</span>
-      <span>HOLIDAY EXPLORER</span>
+      <span>{{ section.settings.drawer_title | default: 'HOLIDAY EXPLORER' }}</span>
     </div>
     <button type="button" class="drawer-close-btn" data-drawer-close="nav" aria-label="Close navigation">
       ✕
     </button>
   </div>
 
-  <div class="drawer-section-heading">Winter Boredom Categories</div>
-  <ul class="drawer-nav-list">
-    <li class="drawer-nav-item">
-      <a href="#trending" class="drawer-nav-link highlight" data-drawer-close="nav">
-        <span><span class="drawer-nav-icon">🎮</span>Boredom Busters</span>
-        <span class="drawer-nav-badge">HOT</span>
-      </a>
-    </li>
-    <li class="drawer-nav-item">
-      <a href="#trending" class="drawer-nav-link" data-drawer-close="nav">
-        <span><span class="drawer-nav-icon">💡</span>Room Vibes & LED</span>
-      </a>
-    </li>
-    <li class="drawer-nav-item">
-      <a href="#trending" class="drawer-nav-link" data-drawer-close="nav">
-        <span><span class="drawer-nav-icon">🕹️</span>Gaming & Desk Tech</span>
-      </a>
-    </li>
-    <li class="drawer-nav-item">
-      <a href="#trending" class="drawer-nav-link" data-drawer-close="nav">
-        <span><span class="drawer-nav-icon">📸</span>Creative Tech & Vibe</span>
-      </a>
-    </li>
-  </ul>
+  {%- if section.blocks.size > 0 -%}
+    <!-- Blocks Navigation Mode -->
+    {%- assign current_group = '' -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'nav_header' -%}
+        {%- if forloop.first == false -%}</ul>{%- endif -%}
+        <div class="drawer-section-heading" {{ block.shopify_attributes }}>{{ block.settings.title | escape }}</div>
+        <ul class="drawer-nav-list">
+      {%- elsif block.type == 'nav_link' -%}
+        {%- if forloop.first -%}<ul class="drawer-nav-list">{%- endif -%}
+        <li class="drawer-nav-item" {{ block.shopify_attributes }}>
+          <a href="{{ block.settings.url | default: '#trending' }}" class="drawer-nav-link{% if block.settings.highlight %} highlight{% endif %}" data-drawer-close="nav">
+            <span>
+              {%- if block.settings.emoji != blank -%}<span class="drawer-nav-icon">{{ block.settings.emoji }}</span>{%- endif -%}
+              {{ block.settings.title | escape }}
+            </span>
+            {%- if block.settings.badge != blank -%}
+              <span class="drawer-nav-badge">{{ block.settings.badge | escape }}</span>
+            {%- endif -%}
+          </a>
+        </li>
+        {%- if forloop.last -%}</ul>{%- endif -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- elsif section.settings.menu != blank -%}
+    <!-- Shopify Link List Menu Mode -->
+    <div class="drawer-section-heading">Catalog Navigation</div>
+    <ul class="drawer-nav-list">
+      {%- for link in section.settings.menu.links -%}
+        <li class="drawer-nav-item">
+          <a href="{{ link.url }}" class="drawer-nav-link" data-drawer-close="nav">
+            <span>{{ link.title }}</span>
+          </a>
+        </li>
+      {%- endfor -%}
+    </ul>
+  {%- else -%}
+    <!-- Built-in Default Curated Navigation Fallback -->
+    <div class="drawer-section-heading">Winter Boredom Categories</div>
+    <ul class="drawer-nav-list">
+      <li class="drawer-nav-item">
+        <a href="#trending" class="drawer-nav-link highlight" data-drawer-close="nav">
+          <span><span class="drawer-nav-icon">🎮</span>Boredom Busters</span>
+          <span class="drawer-nav-badge">HOT</span>
+        </a>
+      </li>
+      <li class="drawer-nav-item">
+        <a href="#trending" class="drawer-nav-link" data-drawer-close="nav">
+          <span><span class="drawer-nav-icon">💡</span>Room Vibes &amp; LED</span>
+        </a>
+      </li>
+      <li class="drawer-nav-item">
+        <a href="#trending" class="drawer-nav-link" data-drawer-close="nav">
+          <span><span class="drawer-nav-icon">🕹️</span>Gaming &amp; Desk Tech</span>
+        </a>
+      </li>
+      <li class="drawer-nav-item">
+        <a href="#trending" class="drawer-nav-link" data-drawer-close="nav">
+          <span><span class="drawer-nav-icon">📸</span>Creative Tech &amp; Vibe</span>
+        </a>
+      </li>
+    </ul>
 
-  <div class="drawer-section-heading">Holiday Gift Budgets</div>
-  <ul class="drawer-nav-list">
-    <li class="drawer-nav-item">
-      <a href="#budget" class="drawer-nav-link" data-drawer-close="nav">
-        <span><span class="drawer-nav-icon">🎄</span>Stocking Stuffers Under $25</span>
-      </a>
-    </li>
-    <li class="drawer-nav-item">
-      <a href="#budget" class="drawer-nav-link" data-drawer-close="nav">
-        <span><span class="drawer-nav-icon">🎁</span>Under $50 Gadgets</span>
-      </a>
-    </li>
-    <li class="drawer-nav-item">
-      <a href="#budget" class="drawer-nav-link" data-drawer-close="nav">
-        <span><span class="drawer-nav-icon">⭐</span>Under $100 Epic Tech</span>
-      </a>
-    </li>
-    <li class="drawer-nav-item">
-      <a href="#budget" class="drawer-nav-link" data-drawer-close="nav">
-        <span><span class="drawer-nav-icon">🔥</span>Top Christmas Wishlist</span>
-      </a>
-    </li>
-  </ul>
+    <div class="drawer-section-heading">Holiday Gift Budgets</div>
+    <ul class="drawer-nav-list">
+      <li class="drawer-nav-item">
+        <a href="#budget" class="drawer-nav-link" data-drawer-close="nav">
+          <span><span class="drawer-nav-icon">🎄</span>Stocking Stuffers Under $25</span>
+        </a>
+      </li>
+      <li class="drawer-nav-item">
+        <a href="#budget" class="drawer-nav-link" data-drawer-close="nav">
+          <span><span class="drawer-nav-icon">🎁</span>Under $50 Gadgets</span>
+        </a>
+      </li>
+      <li class="drawer-nav-item">
+        <a href="#budget" class="drawer-nav-link" data-drawer-close="nav">
+          <span><span class="drawer-nav-icon">⭐</span>Under $100 Epic Tech</span>
+        </a>
+      </li>
+      <li class="drawer-nav-item">
+        <a href="#budget" class="drawer-nav-link" data-drawer-close="nav">
+          <span><span class="drawer-nav-icon">🔥</span>Top Christmas Wishlist</span>
+        </a>
+      </li>
+    </ul>
 
-  <div class="drawer-section-heading">Parent & International Help</div>
-  <ul class="drawer-nav-list">
-    <li class="drawer-nav-item">
-      <a href="pages/track-order.html" class="drawer-nav-link">
-        <span><span class="drawer-nav-icon">📦</span>Track My Order</span>
-      </a>
-    </li>
-    <li class="drawer-nav-item">
-      <a href="pages/shipping-duties.html" class="drawer-nav-link">
-        <span><span class="drawer-nav-icon">🌍</span>Shipping & Customs (DDP)</span>
-      </a>
-    </li>
-    <li class="drawer-nav-item">
-      <a href="pages/returns.html" class="drawer-nav-link">
-        <span><span class="drawer-nav-icon">🔄</span>60-Day Holiday Returns</span>
-      </a>
-    </li>
-    <li class="drawer-nav-item">
-      <a href="pages/faq.html" class="drawer-nav-link">
-        <span><span class="drawer-nav-icon">❓</span>Holiday FAQ & Safety</span>
-      </a>
-    </li>
-  </ul>
+    <div class="drawer-section-heading">Parent &amp; International Help</div>
+    <ul class="drawer-nav-list">
+      <li class="drawer-nav-item">
+        <a href="pages/track-order.html" class="drawer-nav-link">
+          <span><span class="drawer-nav-icon">📦</span>Track My Order</span>
+        </a>
+      </li>
+      <li class="drawer-nav-item">
+        <a href="pages/shipping-duties.html" class="drawer-nav-link">
+          <span><span class="drawer-nav-icon">🌍</span>Shipping &amp; Customs (DDP)</span>
+        </a>
+      </li>
+      <li class="drawer-nav-item">
+        <a href="pages/returns.html" class="drawer-nav-link">
+          <span><span class="drawer-nav-icon">🔄</span>60-Day Holiday Returns</span>
+        </a>
+      </li>
+      <li class="drawer-nav-item">
+        <a href="pages/faq.html" class="drawer-nav-link">
+          <span><span class="drawer-nav-icon">❓</span>Holiday FAQ &amp; Safety</span>
+        </a>
+      </li>
+    </ul>
+  {%- endif -%}
 
   <!-- Country & Currency Selector -->
-  <div class="drawer-country-selector">
-    <label class="drawer-country-label" for="drawer-country-select">Shipping Destination & Currency</label>
-    <select id="drawer-country-select" class="country-currency-select drawer-country-select">
-      <option value="USD">🇺🇸 United States (USD $)</option>
-      <option value="GBP">🇬🇧 United Kingdom (GBP £)</option>
-      <option value="EUR">🇪🇺 Europe / Eurozone (EUR €)</option>
-      <option value="CAD">🇨🇦 Canada (CAD CA$)</option>
-      <option value="AUD">🇦🇺 Australia (AUD AU$)</option>
-    </select>
-  </div>
+  {%- if section.settings.show_currency_selector -%}
+    <div class="drawer-country-selector">
+      <label class="drawer-country-label" for="drawer-country-select">Shipping Destination &amp; Currency</label>
+      <select id="drawer-country-select" class="country-currency-select drawer-country-select">
+        <option value="USD">🇺🇸 United States (USD $)</option>
+        <option value="GBP">🇬🇧 United Kingdom (GBP £)</option>
+        <option value="EUR">🇪🇺 Europe / Eurozone (EUR €)</option>
+        <option value="CAD">🇨🇦 Canada (CAD CA$)</option>
+        <option value="AUD">🇦🇺 Australia (AUD AU$)</option>
+      </select>
+    </div>
+  {%- endif -%}
 
-  <div class="drawer-footer-reassurance">
-    🎄 <strong>Guaranteed Christmas Delivery</strong><br>
-    Orders ship with pre-paid import duties.
-  </div>
+  {%- if section.settings.reassurance_text != blank -%}
+    <div class="drawer-footer-reassurance">
+      {{ section.settings.reassurance_text }}
+    </div>
+  {%- endif -%}
 </nav>
 
 {% schema %}
@@ -148,10 +215,132 @@
   "name": "Header & Mobile Nav",
   "settings": [
     {
+      "type": "header",
+      "content": "Brand Identity"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Custom Brand Logo"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 60,
+      "max": 240,
+      "step": 10,
+      "unit": "px",
+      "label": "Logo Width",
+      "default": 140
+    },
+    {
       "type": "text",
       "id": "logo_text",
-      "label": "Logo text",
-      "default": "FROSTBYTE"
+      "label": "Fallback Logo Prefix",
+      "default": "FROST"
+    },
+    {
+      "type": "text",
+      "id": "logo_highlight",
+      "label": "Fallback Logo Highlight",
+      "default": "BYTE"
+    },
+    {
+      "type": "header",
+      "content": "Behavior & Navigation"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sticky_header",
+      "label": "Enable Sticky Header on Scroll",
+      "default": true
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Primary Navigation Menu",
+      "info": "Optional. If left blank, the customizable navigation blocks or holiday presets below will be displayed."
+    },
+    {
+      "type": "text",
+      "id": "drawer_title",
+      "label": "Drawer Header Title",
+      "default": "HOLIDAY EXPLORER"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_currency_selector",
+      "label": "Show Region & Currency Selector in Drawer",
+      "default": true
+    },
+    {
+      "type": "richtext",
+      "id": "reassurance_text",
+      "label": "Drawer Footer Reassurance Text",
+      "default": "<p>🎄 <strong>Guaranteed Christmas Delivery</strong><br>Orders ship with pre-paid import duties.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Colors & Custom Styling"
+    },
+    {
+      "type": "color",
+      "id": "custom_bg_color",
+      "label": "Custom Background Color"
+    },
+    {
+      "type": "color",
+      "id": "custom_text_color",
+      "label": "Custom Text Color"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "nav_header",
+      "name": "Navigation Section Header",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Section Title",
+          "default": "Winter Boredom Categories"
+        }
+      ]
+    },
+    {
+      "type": "nav_link",
+      "name": "Navigation Link Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "emoji",
+          "label": "Emoji Icon",
+          "default": "🎮"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Link Title",
+          "default": "Boredom Busters"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link Destination"
+        },
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Pill Badge (e.g. HOT, NEW)",
+          "default": "HOT"
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight",
+          "label": "Highlight Row",
+          "default": false
+        }
+      ]
     }
   ]
 }

@@ -1,0 +1,53 @@
+{
+  "sections": {
+    "main_returns": {
+      "type": "main-returns",
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "step_number": "1",
+            "title": "Visit the Self-Serve Return Portal",
+            "detail": "Enter your order number and postal code to select items for exchange or store refund."
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "step_number": "2",
+            "title": "Print Your Prepaid Return Label",
+            "detail": "We provide localized return drop-off points across the US, UK, Canada, Australia, and EU."
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "step_number": "3",
+            "title": "Fast Refund Within 48 Hours",
+            "detail": "Once scanned by the courier, your refund is credited back to your original payment method."
+          }
+        }
+      },
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3"
+      ],
+      "settings": {
+        "badge_emoji": "🔄",
+        "heading": "Extended 60-Day Holiday Returns",
+        "subheading": "Shop with zero stress. Return or exchange any gift until January 31, 2027.",
+        "guarantee_title": "The Worry-Free Teen Gift Guarantee",
+        "guarantee_text": "<p>We know teenagers can change their mind or receive duplicate gifts. Any purchase made between <strong>November 1 and December 25</strong> can be returned or exchanged until <strong>January 31, 2027</strong>.</p>",
+        "steps_heading": "3 Simple Steps to Return or Exchange:",
+        "show_return_btn": true,
+        "return_btn_text": "Start a Return or Exchange",
+        "padding_top": 36,
+        "padding_bottom": 48
+      }
+    }
+  },
+  "order": [
+    "main_returns"
+  ]
+}

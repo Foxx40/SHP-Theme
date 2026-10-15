@@ -1,0 +1,67 @@
+{
+  "sections": {
+    "main_faq": {
+      "type": "main-faq",
+      "blocks": {
+        "delivery_guarantee": {
+          "type": "faq_row",
+          "settings": {
+            "emoji": "🎄",
+            "question": "Will my order arrive before Christmas Day?",
+            "answer": "<p><strong>Yes!</strong> All orders placed on or before our stated cutoff date (December 15–18 depending on destination country) are backed by our 100% Christmas Arrival Guarantee. If your package doesn't reach your address by December 24, we will refund your full shipping cost and send you a $25 gift card.</p>"
+          }
+        },
+        "power_plugs": {
+          "type": "faq_row",
+          "settings": {
+            "emoji": "🔌",
+            "question": "Do these electronic gadgets work with UK / EU / AU / US power outlets?",
+            "answer": "<p><strong>Yes, universally compatible!</strong> 95% of our gadgets operate over universal USB-C or standard 5V USB cables. Region-matched wall adapters (US 110V, UK 230V, EU 230V, AU plug) are included automatically based on your destination country.</p>"
+          }
+        },
+        "teen_safety": {
+          "type": "faq_row",
+          "settings": {
+            "emoji": "🛡️",
+            "question": "Are these gadgets safe for teens and tweens (ages 10–16)?",
+            "answer": "<p><strong>Strictly safety-tested:</strong> Every product in our catalog holds official CE, FCC, RoHS, and UKCA safety marks. We use shatter-resistant materials, non-toxic finishes, and low-voltage cool-to-touch LEDs.</p>"
+          }
+        },
+        "customs_vat": {
+          "type": "faq_row",
+          "settings": {
+            "emoji": "💰",
+            "question": "Will the recipient or I have to pay any customs duty or VAT?",
+            "answer": "<p><strong>Zero surprise fees:</strong> We ship Delivered Duty Paid (DDP). All sales tax, VAT, and international import tariffs are settled upfront by us during dispatch. You and the recipient will never be asked for additional payment by the delivery courier.</p>"
+          }
+        },
+        "returns_exchanges": {
+          "type": "faq_row",
+          "settings": {
+            "emoji": "🔄",
+            "question": "What if my teen receives duplicate gifts or wants a different color?",
+            "answer": "<p>Our extended holiday return window runs all the way through <strong>January 31, 2027</strong>. You or the gift recipient can initiate an exchange or return for any unopened item with free return drop-off available in 15+ countries.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "delivery_guarantee",
+        "power_plugs",
+        "teen_safety",
+        "customs_vat",
+        "returns_exchanges"
+      ],
+      "settings": {
+        "badge_emoji": "❓",
+        "heading": "Holiday & Parent FAQ",
+        "subheading": "Delivery deadlines, international plug safety, and teen gadget certifications.",
+        "open_first": true,
+        "padding_top": 36,
+        "padding_bottom": 48
+      }
+    }
+  },
+  "order": [
+    "main_faq"
+  ]
+}

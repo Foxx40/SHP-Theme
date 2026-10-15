@@ -1,0 +1,255 @@
+{%- style -%}
+  #Section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top | default: 36 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | default: 48 }}px;
+    {% if section.settings.custom_bg_color != blank %}
+      background-color: {{ section.settings.custom_bg_color }};
+    {% endif %}
+  }
+  #Section-{{ section.id }} .page-hero-title {
+    {% if section.settings.custom_text_color != blank %}
+      color: {{ section.settings.custom_text_color }};
+    {% endif %}
+  }
+{%- endstyle -%}
+
+<article class="page-returns" id="Section-{{ section.id }}">
+  <header class="page-hero">
+    {%- if section.settings.badge_emoji != blank -%}
+      <div style="font-size: 2.2rem; margin-bottom: 8px;">{{ section.settings.badge_emoji }}</div>
+    {%- endif -%}
+    <h1 class="page-hero-title">{{ section.settings.heading | default: 'Extended 60-Day Holiday Returns' | escape }}</h1>
+    {%- if section.settings.subheading != blank -%}
+      <p class="page-hero-sub">{{ section.settings.subheading | escape }}</p>
+    {%- endif -%}
+  </header>
+
+  <div class="page-content-wrapper">
+    <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(43, 76, 94, 0.08)); border: 1.5px solid var(--color-success); border-radius: var(--radius-md); padding: 20px; margin-bottom: 24px; text-align: center;">
+      <div style="font-size: 1.8rem; margin-bottom: 4px;">🎄</div>
+      <h2 style="font-size: 1.25rem; font-weight: 900; color: var(--color-text-main); margin-bottom: 6px;">
+        {{ section.settings.guarantee_title | default: 'The Worry-Free Teen Gift Guarantee' }}
+      </h2>
+      <div style="font-size: 0.9rem; color: var(--color-text-main); line-height: 1.5;">
+        {{ section.settings.guarantee_text }}
+      </div>
+    </div>
+
+    <section class="reveal-on-scroll">
+      <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--color-text-main); margin-bottom: 12px;">
+        {{ section.settings.steps_heading | default: '3 Simple Steps to Return or Exchange:' }}
+      </h3>
+      <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 28px;">
+        {%- if section.blocks.size > 0 -%}
+          {%- for block in section.blocks -%}
+            <div style="display: flex; gap: 14px; background: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 16px;" {{ block.shopify_attributes }}>
+              <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--color-primary); color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 900; flex-shrink: 0;">
+                {{ block.settings.step_number | default: forloop.index }}
+              </div>
+              <div>
+                <h4 style="font-size: 0.95rem; font-weight: 800; color: var(--color-text-main); margin-bottom: 2px;">{{ block.settings.title }}</h4>
+                <p style="font-size: 0.84rem; color: var(--color-text-muted); line-height: 1.4;">{{ block.settings.detail }}</p>
+              </div>
+            </div>
+          {%- endfor -%}
+        {%- else -%}
+          <div style="display: flex; gap: 14px; background: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 16px;">
+            <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--color-primary); color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 900; flex-shrink: 0;">1</div>
+            <div>
+              <h4 style="font-size: 0.95rem; font-weight: 800; color: var(--color-text-main);">Visit the Self-Serve Return Portal</h4>
+              <p style="font-size: 0.84rem; color: var(--color-text-muted);">Enter your order number and postal code to select items for exchange or store refund.</p>
+            </div>
+          </div>
+          <div style="display: flex; gap: 14px; background: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 16px;">
+            <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--color-primary); color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 900; flex-shrink: 0;">2</div>
+            <div>
+              <h4 style="font-size: 0.95rem; font-weight: 800; color: var(--color-text-main);">Print Your Prepaid Return Label</h4>
+              <p style="font-size: 0.84rem; color: var(--color-text-muted);">We provide localized return drop-off points across the US, UK, Canada, Australia, and EU.</p>
+            </div>
+          </div>
+          <div style="display: flex; gap: 14px; background: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 16px;">
+            <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--color-primary); color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 900; flex-shrink: 0;">3</div>
+            <div>
+              <h4 style="font-size: 0.95rem; font-weight: 800; color: var(--color-text-main);">Fast Refund Within 48 Hours</h4>
+              <p style="font-size: 0.84rem; color: var(--color-text-muted);">Once scanned by the courier, your refund is credited back to your original payment method.</p>
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+    </section>
+
+    {%- if section.settings.show_return_btn -%}
+      <div style="text-align: center; margin-top: 20px;">
+        <button type="button" class="btn-tactile btn-primary" onclick="alert('Starting automated return label generator...');">
+          <span>{{ section.settings.return_btn_text | default: 'Start a Return or Exchange' }}</span>
+        </button>
+      </div>
+    {%- endif -%}
+  </div>
+</article>
+
+{% schema %}
+{
+  "name": "Holiday Returns",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Page Header"
+    },
+    {
+      "type": "text",
+      "id": "badge_emoji",
+      "label": "Header Emoji Icon",
+      "default": "🔄"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Extended 60-Day Holiday Returns"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Shop with zero stress. Return or exchange any gift until January 31, 2027."
+    },
+    {
+      "type": "header",
+      "content": "Guarantee Box"
+    },
+    {
+      "type": "text",
+      "id": "guarantee_title",
+      "label": "Guarantee Title",
+      "default": "The Worry-Free Teen Gift Guarantee"
+    },
+    {
+      "type": "richtext",
+      "id": "guarantee_text",
+      "label": "Guarantee Description",
+      "default": "<p>We know teenagers can change their mind or receive duplicate gifts. Any purchase made between <strong>November 1 and December 25</strong> can be returned or exchanged until <strong>January 31, 2027</strong>.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Steps Title"
+    },
+    {
+      "type": "text",
+      "id": "steps_heading",
+      "label": "Steps Heading",
+      "default": "3 Simple Steps to Return or Exchange:"
+    },
+    {
+      "type": "header",
+      "content": "Action Button"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_return_btn",
+      "label": "Show Action Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "return_btn_text",
+      "label": "Button Label",
+      "default": "Start a Return or Exchange"
+    },
+    {
+      "type": "header",
+      "content": "Section Spacing & Colors"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 48
+    },
+    {
+      "type": "color",
+      "id": "custom_bg_color",
+      "label": "Custom Background Color"
+    },
+    {
+      "type": "color",
+      "id": "custom_text_color",
+      "label": "Custom Heading Color"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Process Step",
+      "settings": [
+        {
+          "type": "text",
+          "id": "step_number",
+          "label": "Step Number",
+          "default": "1"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Step Title",
+          "default": "Visit the Self-Serve Return Portal"
+        },
+        {
+          "type": "text",
+          "id": "detail",
+          "label": "Step Detail",
+          "default": "Enter your order number and postal code to select items for exchange or store refund."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Holiday Returns",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "step_number": "1",
+            "title": "Visit the Self-Serve Return Portal",
+            "detail": "Enter your order number and postal code to select items for exchange or store refund."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_number": "2",
+            "title": "Print Your Prepaid Return Label",
+            "detail": "We provide localized return drop-off points across the US, UK, Canada, Australia, and EU."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_number": "3",
+            "title": "Fast Refund Within 48 Hours",
+            "detail": "Once scanned by the courier, your refund is credited back to your original payment method."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
